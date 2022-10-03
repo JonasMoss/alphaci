@@ -1,7 +1,7 @@
 inst/doc
-#.Rproj.user
-#.Rhistory
-#.Rdata
+.Rproj.user
+.Rhistory
+.Rdata
 .httr-oauth
 .DS_Store
-#README_cache
+README_cache
