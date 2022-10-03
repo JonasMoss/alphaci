@@ -4,22 +4,36 @@
 #'    both ordinary coefficient alpha (`alphaci`) and standardized coefficient
 #'    alpha (`alphaci_std`).
 #'
+#' None of the methods accept missing data.
+#'
+#'
+#'
 #' @export
-#' @param x Data to estimate alpha on.
+#' @param x Input data data can be converted to a matrix using `as.matrix`.
+#'   Missing values will be ignored.
 #' @param type Type of confidence interval. Either `adf`, `elliptical`, or
 #'   `normal`.
 #' @param transform One of `"none"`, `"log"`, `"fisher"`, and `"arcsin`.
 #'   Defaults to `"none"`.
 #' @param parallel If `TRUE`, makes calculations under the assumption of a
-#'   parallel model. Default to `FALSE`.
-#' @param alternative Direction of the confidence interval.
+#'   parallel model. Defaults to `FALSE`.
+#' @param alternative A character string specifying the alternative hypothesis,
+#'   must be one of `"two.sided"` (default), `"greater"` or `"less"`.
 #' @param conf_level Confidence level.
 #' @param bootstrap If `TRUE`, performs a studentized bootstrap with `n_reps`
 #'   repetitions. Defaults to `FALSE`.
 #' @param n_reps Number of bootstrap samples if `bootstrap = TRUE`. Ignored if
 #'   `bootstrap = FALSE`. Defaults to `1000`.
-#' @return An appropriate object.
+#' @return A vector of class `alphaci` containing the confidence end points.
 #' @name alphaci
+#' @examples
+#' library("alphaci")
+#' library("psychTools")
+#' x <- bfi[, 1:5]
+#' x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+#' alphaci(x)
+#' alphaci_std(x)
+#'
 alphaci <- function(x,
                     type = c("adf", "elliptical", "normal"),
                     transform = "none",
@@ -30,15 +44,16 @@ alphaci <- function(x,
                     n_reps = 1000) {
   call <- match.call()
   alphaci_(x,
-            type,
-            transform,
-            parallel,
-            conf_level,
-            alternative,
-            bootstrap,
-            n_reps,
-            standardized = FALSE,
-            call)
+    type,
+    transform,
+    parallel,
+    conf_level,
+    alternative,
+    bootstrap,
+    n_reps,
+    standardized = FALSE,
+    call
+  )
 }
 
 #' @export
@@ -53,16 +68,16 @@ alphaci_std <- function(x,
                         n_reps = 1000) {
   call <- match.call()
   alphaci_(x,
-            type,
-            transform,
-            parallel,
-            conf_level,
-            alternative,
-            bootstrap,
-            n_reps,
-            standardized = TRUE,
-            call)
-
+    type,
+    transform,
+    parallel,
+    conf_level,
+    alternative,
+    bootstrap,
+    n_reps,
+    standardized = TRUE,
+    call
+  )
 }
 
 alphaci_ <- function(x,
@@ -75,7 +90,6 @@ alphaci_ <- function(x,
                      n_reps,
                      standardized,
                      call) {
-
   type <- match.arg(type)
   alternative <- match.arg(alternative)
   transformer <- get_transformer(transform)
@@ -84,7 +98,7 @@ alphaci_ <- function(x,
   x <- stats::na.omit(as.matrix(x))
 
   sigma <- stats::cov(x)
-  if(!standardized) {
+  if (!standardized) {
     est <- alpha(sigma)
     sd <- sqrt(avar(x, sigma, type, parallel))
   } else {
@@ -123,7 +137,6 @@ alphaci_ <- function(x,
   class(ci) <- "alphaci"
   ci[2] <- min(ci[2], 1)
   ci
-
 }
 
 

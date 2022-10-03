@@ -39,11 +39,12 @@ sigma <- cov(x)
 test_that("avar yields different results.", {
   results <- c(
     avar(x, cov(x), type = "adf", parallel = FALSE),
-  avar(x, cov(x), type = "elliptical", parallel = FALSE),
-  avar(x, cov(x), type = "elliptical", parallel = TRUE),
-  avar(x, cov(x), type = "normal", parallel = FALSE),
-  avar(x, cov(x), type = "normal", parallel = TRUE))
-  for(i in seq(length(results) - 1)) {
+    avar(x, cov(x), type = "elliptical", parallel = FALSE),
+    avar(x, cov(x), type = "elliptical", parallel = TRUE),
+    avar(x, cov(x), type = "normal", parallel = FALSE),
+    avar(x, cov(x), type = "normal", parallel = TRUE)
+  )
+  for (i in seq(length(results) - 1)) {
     expect_false(isTRUE(all.equal(results[i], results[i + 1])))
   }
 })
@@ -54,8 +55,9 @@ test_that("avar_std yields different results.", {
     avar_std(x, cov(x), type = "elliptical", parallel = FALSE),
     avar_std(x, cov(x), type = "elliptical", parallel = TRUE),
     avar_std(x, cov(x), type = "normal", parallel = FALSE),
-    avar_std(x, cov(x), type = "normal", parallel = TRUE))
-  for(i in seq(length(results) - 1)) {
+    avar_std(x, cov(x), type = "normal", parallel = TRUE)
+  )
+  for (i in seq(length(results) - 1)) {
     expect_false(isTRUE(all.equal(results[i], results[i + 1])))
   }
 })
