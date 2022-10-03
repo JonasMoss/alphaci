@@ -3,7 +3,7 @@
     "path": "C:/Users/jonas/OneDrive/Github/alphaci/README.qmd",
     "project_path": "README.qmd",
     "type": "r_markdown",
-    "hash": "0",
+    "hash": "2572857006",
     "contents": "",
     "dirty": false,
     "created": 1664783550283.0,
@@ -12,7 +12,7 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "3,28",
+        "cursorPosition": "15,0",
         "scrollLine": "0",
         "last_setup_crc32": "",
         "rmdVisualMode": "false",
@@ -23,11 +23,11 @@
         "docOutlineSize": "117"
     },
     "folds": "",
-    "lastKnownWriteTime": 1664796722,
+    "lastKnownWriteTime": 1664796803,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1664796722434,
+    "last_content_update": 1664796803198,
     "read_only": false,
     "read_only_alternatives": []
 }
