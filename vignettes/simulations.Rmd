@@ -65,7 +65,7 @@ success <- \(ci) true <= ci[2] & true >= ci[1]
 len <- \(ci) ci[2] - ci[1]
 simulations <- \(n) {
     results  <- future.apply::future_replicate(n_reps, {
-      x <- simulate_congeneric(n, k, sigma, lambda, latent = latent)
+      x <- alphaci:::simulate_congeneric(n, k, sigma, lambda, latent = latent)
       cis <- rbind(adf = alphaci(x),
         ell = alphaci(x, type = "elliptical"),
         par = alphaci(x, type = "elliptical", parallel = TRUE),
