@@ -47,7 +47,7 @@ parallel model. Default to \code{FALSE}.}
 repetitions. Defaults to \code{FALSE}.}
 
 \item{n_reps}{Number of bootstrap samples if \code{bootstrap = TRUE}. Ignored if
-\code{bootstrap = FALSE}.}
+\code{bootstrap = FALSE}. Defaults to \code{1000}.}
 }
 \value{
 An appropriate object.

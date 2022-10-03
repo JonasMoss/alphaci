@@ -24,7 +24,15 @@ ci_asymptotic <- function(est, sd, n, transformer, quants) {
 
 #' @keywords internal
 #' @rdname ci
-ci_boot <- function(x, est, sd, type, transformer, parallel, quants, n_reps, standardized = FALSE) {
+ci_boot <- function(x,
+                    est,
+                    sd,
+                    type,
+                    transformer,
+                    parallel,
+                    quants,
+                    n_reps,
+                    standardized = FALSE) {
   boots <- studentized_boots(n_reps, x, type, parallel, transformer)
   est_t <- transformer$est(est)
   sd_t <- transformer$sd(est, sd)
@@ -46,7 +54,12 @@ ci_boot <- function(x, est, sd, type, transformer, parallel, quants, n_reps, sta
 #'   coefficient alpha otherwise.
 #' @return Studentized bootstrap estimates.
 #' @keywords internal
-studentized_boots <- function(n_reps, x, type, parallel, transformer, standardized = FALSE) {
+studentized_boots <- function(n_reps,
+                              x,
+                              type,
+                              parallel,
+                              transformer,
+                              standardized = FALSE) {
   fun <- if (standardized) alpha_std else alpha
   est <- fun(stats::cov(x))
   future.apply::future_replicate(n_reps,

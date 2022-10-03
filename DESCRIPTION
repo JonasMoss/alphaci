@@ -15,12 +15,13 @@ Imports:
     future.apply,
     matrixcalc
 Suggests: 
-    extraDistr, 
-    lavaan, 
+    extraDistr,
+    lavaan,
     psychTools,
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    covr
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

@@ -30,7 +30,8 @@ coverage](https://codecov.io/gh/JonasMoss/alphaci/branch/main/graph/badge.svg)](
 
 An `R` package for doing inference with coefficient alpha and
 standardized alpha. Many methods are supported, with special emphasis on
-small samples and non-normality.
+small samples and non-normality. ***Note:*** This package is under
+active development along with a companion paper.
 
 ```{r setup, include=FALSE}
 #library("alphaci")
@@ -60,10 +61,18 @@ x[, 1] <- 7 - x[, 1] # Reverse-coded item.
 head(x)
 ```
 
-Then calculate a confidence interval
+Then calculate an asymptotically distribution-free confidence interval
+for $\alpha$,
 
 ```{r}
 alphaci(x)
+```
+
+You can also calculate confidence intervals for standardized alpha
+
+```{r}
+#| cache: true
+alphaci_std(x)
 ```
 
 ## Supported techniques
@@ -74,7 +83,7 @@ constructios. The asymptotically distribution-free interval of
 @Yuan2002-oy, and the normal method of @Van_Zyl2000-si.
 
 | Method       | Description                                                                                                                                                                                                                                                |
-|--------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|--------------------------------|----------------------------------------|
 | `adf`        | The asymptotic distribution free method [@Maydeu-Olivares2007-zh]. The method is asymptotically correct, but has poor small-sample performance.                                                                                                            |
 | `elliptical` | The elliptical or pseudo-elliptical kurtosis correction [@Yuan2002-oy]. Uses the unbiased sample estimator of the common kurtosis [@Joanes1998-jo]. Has better small-sample performance than `adf` and `normal` if the kurtosis is large and $n$ is small. |
 | `normal`     | Assumes normality of $X$ [@Van_Zyl2000-si]. This method is not recommended since it yields too short confidence intervals when the excess kurtosis of $X$ is larger than $0$.                                                                              |
@@ -99,6 +108,14 @@ with `n_reps` repetitions. If `bootstrap = FALSE`, an ordinary normal
 approximation will be used. The studentized bootstrap intervals are is a
 second-order correct, so its confidence intervals will be better than
 the normal approximation when $n$ is sufficiently large.
+
+Finally, the option `parallel = TRUE` can be used, which is
+suitable if covariance matrix $\operatorname{Cov}(X)$ is compound
+symmetric. If the distribution is normal or (pseudo-)elliptic, it can be
+used to simplify the expression for the asymptotic variance of alpha and
+standardized alpha to
+$$\sigma^{2}=\frac{2k(1+\kappa/3)}{k-1}(1-\alpha)^{2},$$ where $\kappa$
+is the common kurtosis parameter.
 
 ## How to Contribute or Get Help
 

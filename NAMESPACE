@@ -3,4 +3,5 @@
 S3method(print,alphaci)
 export(alpha_bias)
 export(alphaci)
+export(alphaci_std)
 export(simulate_congeneric)

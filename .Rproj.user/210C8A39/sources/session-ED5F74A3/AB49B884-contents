@@ -11,7 +11,7 @@
 avar <- function(x, sigma, type, parallel) {
   n <- nrow(x)
   k <- ncol(sigma)
-  if (type == "elliptical" | type == "normal") {
+  if (type == "elliptical" || type == "normal") {
     g2 <- \(x) mean((x - mean(x))^4) / stats::var(x)^2
     kurtosis <- \(x) (n - 1) / ((n - 2) * (n - 3)) * ((n + 1) * g2(x) + 6)
     kurt <- if (type == "normal") 0 else mean(apply(x, 2, kurtosis)) - 3
@@ -111,10 +111,12 @@ avar_std <- function(x, sigma, type, parallel) {
   n <- nrow(x)
   k <- ncol(sigma)
   normal <- FALSE
-  if (type == "elliptical" | type == "normal") {
+  corr <- 1
+  if (type == "elliptical" || type == "normal") {
     g2 <- \(x) mean((x - mean(x))^4) / stats::var(x)^2
     kurtosis <- \(x) (n - 1) / ((n - 2) * (n - 3)) * ((n + 1) * g2(x) + 6)
     kurt <- if (type == "normal") 0 else mean(apply(x, 2, kurtosis)) - 3
+    corr <- (1 + kurt / 3)
     if (parallel) {
       return(2 * k / (k - 1) * corr * (1 - alpha_std(sigma))^2)
     }
@@ -122,7 +124,7 @@ avar_std <- function(x, sigma, type, parallel) {
   }
 
   phi <- cov2cor(sigma)
-  psi_mat_ <- psi_mat(x, sigma, normal = normal)
+  psi_mat_ <- corr * psi_mat(x, sigma, normal = normal)
   gs_ <- gs(phi)
   c(t(gs_) %*% psi_mat_ %*% gs_) / sum(phi)^4 * (k / (k - 1))^2
 }

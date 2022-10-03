@@ -130,7 +130,7 @@ div.csl-indent {
 <section id="alphaci" class="level1">
 <h1>alphaci <img src="man/figures/logo.png" align="right" width="160" height="135"></h1>
 <p><a href="https://cran.r-project.org/package=alphaci"><img src="https://www.r-pkg.org/badges/version/alphaci.png" class="img-fluid" alt="CRAN_Status_Badge"></a> <a href="https://github.com/JonasMoss/alphaci/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/JonasMoss/alphaci/actions/workflows/R-CMD-check.yaml/badge.svg" class="img-fluid" alt="R-CMD-check"></a> <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" class="img-fluid" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a> <a href="https://app.codecov.io/gh/JonasMoss/alphaci?branch=main"><img src="https://codecov.io/gh/JonasMoss/alphaci/branch/main/graph/badge.svg" class="img-fluid" alt="Codecov test coverage"></a></p>
-<p>An <code>R</code> package for doing inference with coefficient alpha and standardized alpha. Many methods are supported, with special emphasis on small samples and non-normality.</p>
+<p>An <code>R</code> package for doing inference with coefficient alpha and standardized alpha. Many methods are supported, with special emphasis on small samples and non-normality. <strong><em>Note:</em></strong> This package is under active development along with a companion paper.</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <p>The package is not available on <code>CRAN</code> yet, so use the following command from inside <code>R</code>:</p>
@@ -156,7 +156,7 @@ div.csl-indent {
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 61622  5  3  3  4  5</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 61623  1  6  5  6  5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Then calculate a confidence interval</p>
+<p>Then calculate an asymptotically distribution-free confidence interval for <span class="math inline">\(\alpha\)</span>,</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alphaci</span>(x)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call: alphaci(x = x)</span></span>
@@ -168,6 +168,19 @@ div.csl-indent {
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample estimates.</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     alpha        sd </span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.7037559 0.5536964</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can also calculate confidence intervals for standardized alpha</p>
+<div class="cell" data-hash="README_cache/html/unnamed-chunk-3_0c75e8116b580d099f5a95d69eb00340">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alphaci_std</span>(x)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call: alphaci_std(x = x)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95% confidence interval (n = 2709).</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0.025     0.975 </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.6938373 0.7331658 </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample estimates.</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     alpha        sd </span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.7135016 0.5218675</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="supported-techniques" class="level2">
@@ -207,6 +220,8 @@ div.csl-indent {
 <li>The <a href="https://en.wikipedia.org/wiki/Inverse_trigonometric_functions"><span class="math inline">\(\arcsin\)</span> transform</a>. This transform might fail when <span class="math inline">\(n\)</span> is small, as negative values for <span class="math inline">\(\hat{\alpha}\)</span> is possible, but <span class="math inline">\(\arcsin\)</span> do not accept them,</li>
 </ol>
 <p>The option <code>bootstrap</code> does studentized bootstrapping <span class="citation" data-cites="Efron1987-ov">(<a href="#ref-Efron1987-ov" role="doc-biblioref">Efron 1987</a>)</span> with <code>n_reps</code> repetitions. If <code>bootstrap = FALSE</code>, an ordinary normal approximation will be used. The studentized bootstrap intervals are is a second-order correct, so its confidence intervals will be better than the normal approximation when <span class="math inline">\(n\)</span> is sufficiently large.</p>
+<p>Finally, the option <code>parallel = TRUE</code> can be used, which is suitable if covariance matrix <span class="math inline">\(\operatorname{Cov}(X)\)</span> is compound symmetric. If the distribution is normal or (pseudo-)elliptic, it can be used to simplify the expression for the asymptotic variance of alpha and standardized alpha to</p>
+<p><span class="math display">\[\sigma^{2}=\frac{2k(1+\kappa/3)}{k-1}(1-\alpha)^{2},\]</span> where <span class="math inline">\(\kappa\)</span> is the common kurtosis parameter.</p>
 </section>
 <section id="how-to-contribute-or-get-help" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-contribute-or-get-help">How to Contribute or Get Help</h2>

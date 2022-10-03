@@ -17,7 +17,7 @@
 #' @param bootstrap If `TRUE`, performs a studentized bootstrap with `n_reps`
 #'   repetitions. Defaults to `FALSE`.
 #' @param n_reps Number of bootstrap samples if `bootstrap = TRUE`. Ignored if
-#'   `bootstrap = FALSE`.
+#'   `bootstrap = FALSE`. Defaults to `1000`.
 #' @return An appropriate object.
 #' @name alphaci
 alphaci <- function(x,
@@ -44,11 +44,21 @@ alphaci <- function(x,
   ci <- if (!bootstrap) {
     ci_asymptotic(est, sd, nrow(x), transformer, quants)
   } else {
-    ci_boot(x, est, sd, type, transformer, parallel, quants, n_reps, standardized = FALSE)
+    ci_boot(
+      x,
+      est,
+      sd,
+      type,
+      transformer,
+      parallel,
+      quants,
+      n_reps,
+      standardized = FALSE
+    )
   }
 
   names(ci) <- quants
-  attr(ci, "conf.level") <- conf_level
+  attr(ci, "conf_level") <- conf_level
   attr(ci, "alternative") <- alternative
   attr(ci, "type") <- type
   attr(ci, "n") <- nrow(x)
@@ -64,6 +74,7 @@ alphaci <- function(x,
   ci
 }
 
+#' @export
 #' @rdname alphaci
 alphaci_std <- function(x,
                         type = c("adf", "elliptical", "normal"),
@@ -83,7 +94,7 @@ alphaci_std <- function(x,
   x <- stats::na.omit(as.matrix(x))
 
   sigma <- stats::cov(x)
-  est <- alpha(sigma)
+  est <- alpha_std(sigma)
   sd <- sqrt(avar_std(x, sigma, type, parallel))
 
   ci <- if (!bootstrap) {
@@ -103,7 +114,7 @@ alphaci_std <- function(x,
   }
 
   names(ci) <- quants
-  attr(ci, "conf.level") <- conf_level
+  attr(ci, "conf_level") <- conf_level
   attr(ci, "alternative") <- alternative
   attr(ci, "type") <- type
   attr(ci, "n") <- nrow(x)
@@ -128,7 +139,7 @@ print.alphaci <- function(x, digits = getOption("digits"), ...) {
   ), "\n\n", sep = "")
 
   if (!is.null(x)) {
-    cat(format(100 * at("conf.level")),
+    cat(format(100 * at("conf_level")),
       "% confidence interval (n = ", at("n"), ").\n",
       sep = ""
     )
