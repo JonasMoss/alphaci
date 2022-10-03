@@ -78,7 +78,8 @@ psi_mat <- function(x, sigma, normal = FALSE) {
     multiplier <- sdxsd %*% d_mat
     mat <- gamma_mat(x)
   } else {
-    k_mat <- matrixcalc::K.matrix(ncol(sigma))
+    k <- ncol(sigma)
+    k_mat <- matrixcalc::K.matrix(k)
     multiplier <- sdxsd
     mat <- ((diag(k^2) + k_mat) %*% (sigma %x% sigma))
   }
@@ -123,7 +124,7 @@ avar_std <- function(x, sigma, type, parallel) {
     normal <- TRUE
   }
 
-  phi <- cov2cor(sigma)
+  phi <- stats::cov2cor(sigma)
   psi_mat_ <- corr * psi_mat(x, sigma, normal = normal)
   gs_ <- gs(phi)
   c(t(gs_) %*% psi_mat_ %*% gs_) / sum(phi)^4 * (k / (k - 1))^2
