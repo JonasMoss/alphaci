@@ -9,7 +9,6 @@
 #' @param lambda Vector of loadings.
 #' @return The congeneric reliability standardized reliability,
 #'   coefficient alpha, standardized, orsigma coefficient alpha.
-#' @export
 #' @name reliability
 
 #' @keywords internal

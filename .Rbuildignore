@@ -17,5 +17,9 @@
 ^codecov\.yml$
 ^arxiv\.sty$
 ^orcid\.jpg$
-alphaci
 ^\.github$
+^README.html$
+^README.qmd$
+^README_cache$
+^README_files$
+^references.bib$

@@ -35,3 +35,4 @@ Simulate observations from a one-factor model with specified latent variable
 and error variable distributions. The error terms are not correlated,
 hence the model is congeneric.
 }
+\keyword{internal}

@@ -12,7 +12,7 @@
 #' @param latent Distribution of the latent variable.
 #' @param error Distribution of the error variable.
 #' @return Covariance matrix.
-#' @export
+#' @keywords internal
 simulate_congeneric <- function(n,
                                 k,
                                 sigma = 1,
