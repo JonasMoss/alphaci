@@ -29,49 +29,16 @@ alphaci <- function(x,
                     bootstrap = FALSE,
                     n_reps = 1000) {
   call <- match.call()
-
-  type <- match.arg(type)
-  alternative <- match.arg(alternative)
-
-  transformer <- get_transformer(transform)
-  quants <- limits(alternative, conf_level)
-  x <- stats::na.omit(as.matrix(x))
-
-  sigma <- stats::cov(x)
-  est <- alpha(sigma)
-  sd <- sqrt(avar(x, sigma, type, parallel))
-
-  ci <- if (!bootstrap) {
-    ci_asymptotic(est, sd, nrow(x), transformer, quants)
-  } else {
-    ci_boot(
-      x,
-      est,
-      sd,
-      type,
-      transformer,
-      parallel,
-      quants,
-      n_reps,
-      standardized = FALSE
-    )
-  }
-
-  names(ci) <- quants
-  attr(ci, "conf_level") <- conf_level
-  attr(ci, "alternative") <- alternative
-  attr(ci, "type") <- type
-  attr(ci, "n") <- nrow(x)
-  attr(ci, "parallel") <- parallel
-  attr(ci, "transform") <- transform
-  attr(ci, "bootstrap") <- bootstrap
-  attr(ci, "n_reps") <- n_reps
-  attr(ci, "estimate") <- est
-  attr(ci, "sd") <- sd
-  attr(ci, "call") <- call
-  class(ci) <- "alphaci"
-  ci[2] <- min(ci[2], 1)
-  ci
+  alphaci_(x,
+            type,
+            transform,
+            parallel,
+            conf_level,
+            alternative,
+            bootstrap,
+            n_reps,
+            standardized = FALSE,
+            call)
 }
 
 #' @export
@@ -85,17 +52,45 @@ alphaci_std <- function(x,
                         bootstrap = FALSE,
                         n_reps = 1000) {
   call <- match.call()
+  alphaci_(x,
+            type,
+            transform,
+            parallel,
+            conf_level,
+            alternative,
+            bootstrap,
+            n_reps,
+            standardized = TRUE,
+            call)
+
+}
+
+alphaci_ <- function(x,
+                     type = c("adf", "elliptical", "normal"),
+                     transform,
+                     parallel,
+                     conf_level,
+                     alternative = c("two.sided", "greater", "less"),
+                     bootstrap,
+                     n_reps,
+                     standardized,
+                     call) {
 
   type <- match.arg(type)
   alternative <- match.arg(alternative)
-
   transformer <- get_transformer(transform)
+
   quants <- limits(alternative, conf_level)
   x <- stats::na.omit(as.matrix(x))
 
   sigma <- stats::cov(x)
-  est <- alpha_std(sigma)
-  sd <- sqrt(avar_std(x, sigma, type, parallel))
+  if(!standardized) {
+    est <- alpha(sigma)
+    sd <- sqrt(avar(x, sigma, type, parallel))
+  } else {
+    est <- alpha_std(sigma)
+    sd <- sqrt(avar_std(x, sigma, type, parallel))
+  }
 
   ci <- if (!bootstrap) {
     ci_asymptotic(est, sd, nrow(x), transformer, quants)
@@ -109,7 +104,7 @@ alphaci_std <- function(x,
       parallel,
       quants,
       n_reps,
-      standardized = TRUE
+      standardized = standardized
     )
   }
 
@@ -128,7 +123,9 @@ alphaci_std <- function(x,
   class(ci) <- "alphaci"
   ci[2] <- min(ci[2], 1)
   ci
+
 }
+
 
 #' @export
 print.alphaci <- function(x, digits = getOption("digits"), ...) {

@@ -1,17 +1,17 @@
 get_transformer <- function(transform) {
-  if (transform == "none") {
-    return(transformer_none)
+  transformers = list(
+    fisher = transformer_fisher,
+    none = transformer_none,
+    arcsin = transformer_arcsin,
+    log = transformer_log
+  )
+
+  if(transform %in% names(transformers)) {
+    transformers[[transform]]
+  } else {
+    stop(paste0("`transformer = ", transform, "` not supported."))
   }
-  if (transform == "log") {
-    return(transformer_log)
-  }
-  if (transform == "fisher") {
-    return(transformer_fisher)
-  }
-  if (transform == "arcsin") {
-    return(transformer_arcsin)
-  }
-  stop(paste0("`transformer = ", transform, "` not supported."))
+
 }
 
 transformer_fisher <- c(
