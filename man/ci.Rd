@@ -8,7 +8,17 @@
 \usage{
 ci_asymptotic(est, sd, n, transformer, quants)
 
-ci_boot(x, est, sd, type, transformer, parallel, quants, n_reps)
+ci_boot(
+  x,
+  est,
+  sd,
+  type,
+  transformer,
+  parallel,
+  quants,
+  n_reps,
+  standardized = FALSE
+)
 }
 \arguments{
 \item{est, sd}{The estimate and estimated standard deviation.}
@@ -29,6 +39,9 @@ parallel model. Default to \code{FALSE}.}
 
 \item{n_reps}{Number of bootstrap samples if \code{bootstrap = TRUE}. Ignored if
 \code{bootstrap = FALSE}.}
+
+\item{standardized}{If \code{TRUE}, calculates the standardized alpha. Calculates
+coefficient alpha otherwise.}
 }
 \description{
 Calculates asymptotic confidence intervals.

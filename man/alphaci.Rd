@@ -2,9 +2,21 @@
 % Please edit documentation in R/inference.R
 \name{alphaci}
 \alias{alphaci}
+\alias{alphaci_std}
 \title{Estimate coefficient alpha with a confidence interval.}
 \usage{
 alphaci(
+  x,
+  type = c("adf", "elliptical", "normal"),
+  transform = "none",
+  parallel = FALSE,
+  conf_level = 0.95,
+  alternative = c("two.sided", "greater", "less"),
+  bootstrap = FALSE,
+  n_reps = 1000
+)
+
+alphaci_std(
   x,
   type = c("adf", "elliptical", "normal"),
   transform = "none",
@@ -41,5 +53,7 @@ repetitions. Defaults to \code{FALSE}.}
 An appropriate object.
 }
 \description{
-This function makes use of \code{future.apply} when bootstrapping.
+This function makes use of \code{future.apply} when bootstrapping. Supports
+both ordinary coefficient alpha (\code{alphaci}) and standardized coefficient
+alpha (\code{alphaci_std}).
 }

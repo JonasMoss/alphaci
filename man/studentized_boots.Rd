@@ -4,7 +4,7 @@
 \alias{studentized_boots}
 \title{Studentized bootstrap estimates using transformers.}
 \usage{
-studentized_boots(n_reps, x, type, parallel, transformer)
+studentized_boots(n_reps, x, type, parallel, transformer, standardized = FALSE)
 }
 \arguments{
 \item{n_reps}{Number of bootstrap repetitions.}
@@ -18,6 +18,9 @@ studentized_boots(n_reps, x, type, parallel, transformer)
 parallel model.}
 
 \item{transformer}{A \code{transformer} object.}
+
+\item{standardized}{If \code{TRUE}, calculates the standardized alpha. Calculates
+coefficient alpha otherwise.}
 }
 \value{
 Studentized bootstrap estimates.

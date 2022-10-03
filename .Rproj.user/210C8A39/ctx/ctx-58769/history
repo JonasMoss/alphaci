@@ -1,0 +1,512 @@
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+#var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+alphaci(x)
+devtools::load_all(".")
+library("future.apply")
+plan(multisession)
+x <- na.omit(psychTools::bfi[, 1:5])
+k <- 5
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+#var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+alphaci(x)
+print
+getAnywhere(print.htest)
+getAnywhere(print.lm)
+devtools::load_all(".")
+library("future.apply")
+plan(multisession)
+x <- na.omit(psychTools::bfi[, 1:5])
+k <- 5
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+#var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+alphaci(x)
+prtint.alphaci(alphaci(x))
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+t.test
+?t.test
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+getAnywhere(print.htest)
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+diff.means <- function(d, f)
+{    n <- nrow(d)
+gp1 <- 1:table(as.numeric(d$series))[1]
+m1 <- sum(d[gp1,1] * f[gp1])/sum(f[gp1])
+m2 <- sum(d[-gp1,1] * f[-gp1])/sum(f[-gp1])
+ss1 <- sum(d[gp1,1]^2 * f[gp1]) - (m1 *  m1 * sum(f[gp1]))
+ss2 <- sum(d[-gp1,1]^2 * f[-gp1]) - (m2 *  m2 * sum(f[-gp1]))
+c(m1 - m2, (ss1 + ss2)/(sum(f) - 2))
+}
+grav1 <- gravity[as.numeric(gravity[,2]) >= 7, ]
+grav1.boot <- boot(grav1, diff.means, R = 999, stype = "f",
+strata = grav1[ ,2])
+boot.ci(grav1.boot, type = c("stud", "norm"))
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+library("future.apply")
+plan(multisession)
+x <- na.omit(psychTools::bfi[, 1:5])
+k <- 5
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+#var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+alphaci(x)
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+library("future.apply")
+plan(multisession)
+x <- na.omit(psychTools::bfi[, 1:5])
+k <- 5
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+#var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+alphaci(x)
+print.alphaci(alphaci(x))
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+alphaci(x)
+devtools::load_all(".")
+alphaci(x)
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+devtools::load_all(".")
+print.alphaci(alphaci(x))
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+devtools::load_all(".")
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+_cat
+?cat
+devtools::load_all(".")
+?cat
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+print.alphaci(alphaci(x, bootstrap = TRUE))
+x
+devtools::load_all(".")
+x
+print.alphaci(alphaci(x, bootstrap = TRUE))
+devtools::load_all(".")
+alphaci(x, bootstrap = TRUE)
+library("future.apply")
+plan(multisession)
+x <- na.omit(psychTools::bfi[, 1:5])
+k <- 5
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+#var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+alphaci(x)
+library(alphaci)
+alphaci(x, bootstrap = TRUE)
+devtools::load_all(".")
+devtools::load_all(".")
+devtools::load_all(".")
+library("future.apply")
+plan(multisession)
+x <- na.omit(psychTools::bfi[, 1:5])
+k <- 5
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+#var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+alphaci(x)
+devtools::load_all(".")
+library("future.apply")
+plan(multisession)
+x <- na.omit(psychTools::bfi[, 1:5])
+k <- 5
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+#var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+alphaci(x)
+library(alphaci)
+library("future.apply")
+plan(multisession)
+x <- na.omit(psychTools::bfi[, 1:5])
+k <- 5
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+#var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+alphaci(x)
+library("future.apply")
+plan(multisession)
+x <- na.omit(psychTools::bfi[, 1:5])
+k <- 5
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+#var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+alphaci(x)
+library("future.apply")
+plan(multisession)
+x <- na.omit(psychTools::bfi[, 1:5])
+k <- 5
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+#var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+alphaci(x)
+library(alphaci)
+library("future.apply")
+plan(multisession)
+x <- na.omit(psychTools::bfi[, 1:5])
+k <- 5
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+#var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+alphaci(x)
+usethis::use_vignette()
+usethis::use_vignette(name = "Simulation of confidence intervals with `psychoTools::bfi`.")
+usethis::use_vignette(name = "simulations")
+library(alphaci)
+vignette("alphaci")
+vignette("simulations")
+?vignette
+vignette("simulations", package = "alphaci")
+library(alphaci)
+vignette("simulations", package = "alphaci")
+vignette("simulations", package = "alphaci")
+browseVignettes("alphaci")
+usethis::use_roxygen_md()
+library(alphaci)
+?alphaci
+library(alphaci)
+?alphaci
+library(alphaci)
+?alphaci
+devtools::load_all(".")
+?alphaci
+?alphaci
+?kdensity
+install.packages("kdensity")
+?kdensity
+?kdensity
+?kdensity::kdensity
+?alphci
+?alphaci
+?alphaci
+library(alphaci)
+usethis::use_github_action_check_standard()
+usethis::use_github_action_check_standard()
+usethis::use_github_action_check_standard()
+x
+diag(x)
+sigma_d <- 1/sqrt(diag(cov(x)))
+sigma_d
+sigma_d %x% sigma_d
+sigma_d <- diag(1/sqrt(diag(cov(x))))
+sigma_d %x% sigma_d
+'  sigma_d <- diag(1/sqrt(diag(cov(x))))
+multiplier <- sigma_d %x% sigma_d
+multiplier %*% gamma_mat(x) %*% multiplier'
+sigma_d <- diag(1/sqrt(diag(cov(x))))
+multiplier <- sigma_d %x% sigma_d
+multiplier %*% gamma_mat(x) %*% multiplier
+devtools::load_all(".")
+sigma_d <- diag(1/sqrt(diag(cov(x))))
+multiplier <- sigma_d %x% sigma_d
+multiplier %*% gamma_mat(x) %*% multiplier
+gamma_mat(x)
+?matrixcalc::D.matrix
+d_mat <- matrixcalc::D.matrix(k)
+d_mat
+d_mat <- matrixcalc::D.matrix(k)
+d_mat %*% gamma_mat(x)
+d_mat <- matrixcalc::D.matrix(k)
+t(d_mat) %*% gamma_mat(x) %*% d_mat
+t(d_mat) %*% gamma_mat(x)
+d_mat <- matrixcalc::D.matrix(k)
+d_mat %*% gamma_mat(x) %*% t(d_mat)
+gamma_mat(x)
+d_mat <- matrixcalc::D.matrix(k)
+multiplier %*% (d_mat %*% gamma_mat(x) %*% t(d_mat)) %*% multiplier
+d_mat <- matrixcalc::D.matrix(k)
+multiplier %*% (d_mat %*% gamma_mat(x) %*% t(d_mat)) %*% multiplier
+mult <- multiplier %*% d_mat
+mult %*% gamma_mat(x) %*% t(mult)
+multiplier %*% (d_mat %*% gamma_mat(x) %*% t(d_mat)) %*% multiplier - mult %*% gamma_mat(x) %*% t(mult)
+d_mat <- matrixcalc::D.matrix(k)
+sigma_d <- diag(1/sqrt(diag(cov(x))))
+multiplier <- sigma_d %x% sigma_d %*% d_mat
+multiplier %*% gamma_mat(x) %*% multiplier
+d_mat <- matrixcalc::D.matrix(ncol(x))
+sigma_d <- diag(1/sqrt(diag(cov(x))))
+multiplier <- (sigma_d %x% sigma_d) %*% d_mat
+multiplier %*% gamma_mat(x) %*% multiplier
+multiplier
+d_mat <- matrixcalc::D.matrix(ncol(x))
+sigma_d <- diag(1/sqrt(diag(cov(x))))
+multiplier <- (sigma_d %x% sigma_d) %*% d_mat
+multiplier %*% gamma_mat(x) %*% multiplier
+(sigma_d %x% sigma_d) %*% d_mat
+d_mat <- matrixcalc::D.matrix(ncol(x))
+sigma_d <- diag(1/sqrt(diag(cov(x))))
+multiplier <- (sigma_d %x% sigma_d) %*% d_mat
+multiplier %*% gamma_mat(x) %*% t(multiplier)
+d_mat <- matrixcalc::D.matrix(ncol(x))
+k_mat_d <- matrixcalc::K.matrix(k)
+k_mat_d
+d_mat <- matrixcalc::D.matrix(ncol(x))
+k_mat_d <- diag(diag(matrixcalc::K.matrix(k)))
+phi <- cor(x)
+c(phi %*% matrix(1, k, k))
+d_mat <- matrixcalc::D.matrix(ncol(x))
+k_mat_d <- diag(diag(matrixcalc::K.matrix(k)))
+phi <- cor(x)
+k_mat_d %*% c(phi %*% matrix(1, k, k))
+psi_mat(x)
+devtools::load_all(".")
+psi_mat(x)
+d_mat <- matrixcalc::D.matrix(ncol(x))
+k_mat_d <- diag(diag(matrixcalc::K.matrix(k)))
+phi <- cor(x)
+k - k_mat_d %*% c(phi %*% matrix(1, k, k))
+devtools::load_all(".")
+avar_std(x, cov(x))
+avar_std(x, cov(x), type = "adf")
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+devtools::load_all(".")
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+avar(x, cov(x), type = "adf", parallel = FALSE)
+devtools::load_all(".")
+avar(x, cov(x), type = "adf", parallel = FALSE)
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+devtools::load_all(".")
+library("psychTools")
+x <- bfi[, 1:5]
+x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+library("psychTools")
+x <- bfi[, 1:5]
+x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+devtools::load_all(".")
+library("psychTools")
+x <- bfi[, 1:5]
+x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+devtools::load_all(".")
+library("psychTools")
+x <- bfi[, 1:5]
+x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+cov(x)
+library("psychTools")
+x <- bfi[, 1:5]
+x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+x <- na.omit(x)
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+library("psychTools")
+x <- bfi[, 1:5]
+x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+x <- na.omit(x)
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+avar(x, cov(x), type = "adf", parallel = FALSE)
+diag(1/sqrt(diag(sigma)))
+library("psychTools")
+x <- bfi[, 1:5]
+x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+x <- na.omit(x)
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+avar(x, cov(x), type = "adf", parallel = FALSE)
+psi_hat(x, cov(x))
+devtools::load_all(".")
+library("psychTools")
+x <- bfi[, 1:5]
+x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+x <- na.omit(x)
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+avar(x, cov(x), type = "adf", parallel = FALSE)
+psi_hat(x, cov(x))
+library("psychTools")
+x <- bfi[, 1:5]
+x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+x <- na.omit(x)
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+avar(x, cov(x), type = "adf", parallel = FALSE)
+psi_mat(x, cov(x))
+library("psychTools")
+x <- bfi[, 1:5]
+x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+x <- na.omit(x)
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+avar(x, cov(x), type = "adf", parallel = FALSE)
+psi_mat(x, cov(x))
+set.seed(313)
+sigma <- runif(5)
+lambda <- runif(5)
+results <- future_replicate(10000, {
+x <- simulate_congeneric(1000, 5, sigma, lambda)
+avar(x, cov(x), type = "adf", parallel = FALSE)
+}
+results
+library("psychTools")
+x <- bfi[, 1:5]
+x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+x <- na.omit(x)
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+avar(x, cov(x), type = "adf", parallel = FALSE)
+psi_mat(x, cov(x))
+set.seed(313)
+sigma <- runif(5)
+lambda <- runif(5)
+results <- future_replicate(10000, {
+x <- simulate_congeneric(1000, 5, sigma, lambda)
+avar(x, cov(x), type = "adf", parallel = FALSE)
+})
+library("psychTools")
+x <- bfi[, 1:5]
+x[, 1] <- 7 - x[, 1] # Reverse-coded item.
+x <- na.omit(x)
+avar_std(x, cov(x), type = "adf", parallel = FALSE)
+avar(x, cov(x), type = "adf", parallel = FALSE)
+psi_mat(x, cov(x))
+library("future.apply")
+plan(multisession)
+set.seed(313)
+sigma <- runif(5)
+lambda <- runif(5)
+results <- future_replicate(10000, {
+x <- simulate_congeneric(1000, 5, sigma, lambda)
+avar(x, cov(x), type = "adf", parallel = FALSE)
+})

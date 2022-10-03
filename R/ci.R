@@ -11,6 +11,8 @@
 #' @param quants Quantiles for the confidence interval.
 #' @param n_reps Number of bootstrap samples if `bootstrap = TRUE`. Ignored if
 #'   `bootstrap = FALSE`.
+#' @param standardized If `TRUE`, calculates the standardized alpha. Calculates
+#'   coefficient alpha otherwise.
 #' @keywords internal
 #' @name ci
 ci_asymptotic <- function(est, sd, n, transformer, quants) {
@@ -22,7 +24,7 @@ ci_asymptotic <- function(est, sd, n, transformer, quants) {
 
 #' @keywords internal
 #' @rdname ci
-ci_boot <- function(x, est, sd, type, transformer, parallel, quants, n_reps) {
+ci_boot <- function(x, est, sd, type, transformer, parallel, quants, n_reps, standardized = FALSE) {
   boots <- studentized_boots(n_reps, x, type, parallel, transformer)
   est_t <- transformer$est(est)
   sd_t <- transformer$sd(est, sd)
@@ -40,15 +42,18 @@ ci_boot <- function(x, est, sd, type, transformer, parallel, quants, n_reps) {
 #' @param parallel If `TRUE`, makes calculations under the assumption of a
 #'   parallel model.
 #' @param transformer A `transformer` object.
+#' @param standardized If `TRUE`, calculates the standardized alpha. Calculates
+#'   coefficient alpha otherwise.
 #' @return Studentized bootstrap estimates.
 #' @keywords internal
-studentized_boots <- function(n_reps, x, type, parallel, transformer) {
-  est <- alpha(stats::cov(x))
+studentized_boots <- function(n_reps, x, type, parallel, transformer, standardized = FALSE) {
+  fun <- if (standardized) alpha_std else alpha
+  est <- fun(stats::cov(x))
   future.apply::future_replicate(n_reps,
     {
       indices_star <- sample(nrow(x), nrow(x), replace = TRUE)
       sigma_star <- stats::cov(x[indices_star, ])
-      est_star <- alpha(sigma_star)
+      est_star <- fun(sigma_star)
       sd_star <- sqrt(avar(x[indices_star, ], sigma_star, type, parallel))
       (transformer$est(est_star) - transformer$est(est)) /
         transformer$sd(est_star, sd_star)
@@ -74,4 +79,3 @@ limits <- function(alternative, conf_level) {
     return(c(0, conf_level))
   }
 }
-

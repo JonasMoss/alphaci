@@ -3,7 +3,7 @@ rho <- 0.5
 phi <- 2
 sigma <- matrix(phi^2 * rho, k, k)
 diag(sigma) <- phi^2
-x = NULL
+x <- NULL
 
 test_that("same result for `parallel = TRUE` and `FALSE` under parallel", {
   expect_equal(

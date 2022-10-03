@@ -1,6 +1,8 @@
 #' Estimate coefficient alpha with a confidence interval.
 #'
-#' This function makes use of `future.apply` when bootstrapping.
+#' This function makes use of `future.apply` when bootstrapping. Supports
+#'    both ordinary coefficient alpha (`alphaci`) and standardized coefficient
+#'    alpha (`alphaci_std`).
 #'
 #' @export
 #' @param x Data to estimate alpha on.
@@ -17,6 +19,7 @@
 #' @param n_reps Number of bootstrap samples if `bootstrap = TRUE`. Ignored if
 #'   `bootstrap = FALSE`.
 #' @return An appropriate object.
+#' @name alphaci
 alphaci <- function(x,
                     type = c("adf", "elliptical", "normal"),
                     transform = "none",
@@ -41,7 +44,62 @@ alphaci <- function(x,
   ci <- if (!bootstrap) {
     ci_asymptotic(est, sd, nrow(x), transformer, quants)
   } else {
-    ci_boot(x, est, sd, type, transformer, parallel, quants, n_reps)
+    ci_boot(x, est, sd, type, transformer, parallel, quants, n_reps, standardized = FALSE)
+  }
+
+  names(ci) <- quants
+  attr(ci, "conf.level") <- conf_level
+  attr(ci, "alternative") <- alternative
+  attr(ci, "type") <- type
+  attr(ci, "n") <- nrow(x)
+  attr(ci, "parallel") <- parallel
+  attr(ci, "transform") <- transform
+  attr(ci, "bootstrap") <- bootstrap
+  attr(ci, "n_reps") <- n_reps
+  attr(ci, "estimate") <- est
+  attr(ci, "sd") <- sd
+  attr(ci, "call") <- call
+  class(ci) <- "alphaci"
+  ci[2] <- min(ci[2], 1)
+  ci
+}
+
+#' @rdname alphaci
+alphaci_std <- function(x,
+                        type = c("adf", "elliptical", "normal"),
+                        transform = "none",
+                        parallel = FALSE,
+                        conf_level = 0.95,
+                        alternative = c("two.sided", "greater", "less"),
+                        bootstrap = FALSE,
+                        n_reps = 1000) {
+  call <- match.call()
+
+  type <- match.arg(type)
+  alternative <- match.arg(alternative)
+
+  transformer <- get_transformer(transform)
+  quants <- limits(alternative, conf_level)
+  x <- stats::na.omit(as.matrix(x))
+
+  sigma <- stats::cov(x)
+  est <- alpha(sigma)
+  sd <- sqrt(avar_std(x, sigma, type, parallel))
+
+  ci <- if (!bootstrap) {
+    ci_asymptotic(est, sd, nrow(x), transformer, quants)
+  } else {
+    ci_boot(
+      x,
+      est,
+      sd,
+      type,
+      transformer,
+      parallel,
+      quants,
+      n_reps,
+      standardized = TRUE
+    )
   }
 
   names(ci) <- quants
@@ -64,12 +122,16 @@ alphaci <- function(x,
 #' @export
 print.alphaci <- function(x, digits = getOption("digits"), ...) {
   at <- \(y) attr(x, y)
-  cat("Call: ", paste(deparse(at("call")), sep = "\n",
-                         collapse = "\n"), "\n\n", sep = "")
+  cat("Call: ", paste(deparse(at("call")),
+    sep = "\n",
+    collapse = "\n"
+  ), "\n\n", sep = "")
 
   if (!is.null(x)) {
     cat(format(100 * at("conf.level")),
-        "% confidence interval (n = ", at("n"), ").\n", sep = "")
+      "% confidence interval (n = ", at("n"), ").\n",
+      sep = ""
+    )
     print(x[1:2], digits = digits)
     cat("\n")
   }
@@ -78,8 +140,10 @@ print.alphaci <- function(x, digits = getOption("digits"), ...) {
     cat("Sample estimates.\n")
     print(c(
       alpha = at("estimate"),
-      sd = at("sd")),
-      digits = digits)
+      sd = at("sd")
+    ),
+    digits = digits
+    )
   }
   invisible(x)
 }
