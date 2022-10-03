@@ -1,9 +1,9 @@
 {
     "id": "19DE27B5",
-    "path": "C:/Users/jonas/OneDrive/Github/alphaci/README.rmd",
-    "project_path": "README.rmd",
+    "path": "C:/Users/jonas/OneDrive/Github/alphaci/README.qmd",
+    "project_path": "README.qmd",
     "type": "r_markdown",
-    "hash": "1423115662",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1664783550283.0,
@@ -12,7 +12,7 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "5,0",
+        "cursorPosition": "3,28",
         "scrollLine": "0",
         "last_setup_crc32": "",
         "rmdVisualMode": "false",
@@ -23,11 +23,11 @@
         "docOutlineSize": "117"
     },
     "folds": "",
-    "lastKnownWriteTime": 1664796555,
+    "lastKnownWriteTime": 1664796722,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1664796555649,
+    "last_content_update": 1664796722434,
     "read_only": false,
     "read_only_alternatives": []
 }

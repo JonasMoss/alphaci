@@ -1,7 +1,7 @@
 ---
-output:
-  github_document:
-    html_preview: true
+format:
+  gfm:
+    html-math-method: webtex
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
