@@ -1,5 +1,0 @@
-## ---- cache=TRUE--------------------------------------------------------------
-matplot(nn, t(results[1:5, ]), xlab = "n", ylab = "Coverage", type = "b",
-        log = "x")
-abline(h = 0.95, lty = 2)
-
