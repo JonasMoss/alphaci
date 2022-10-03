@@ -1,0 +1,87 @@
+---
+title: "Testing stuff"
+author: "Jonas Moss"
+format: html
+editor: visual
+number-sections: true
+theme: yeti
+code-line-numbers: true
+---
+
+## Quarto
+
+::: {#prp-lm}
+## Linear regression equation
+
+The equation for a linear regression is
+:::
+
+::: {#thm-line}
+## Line
+
+The equation of any straight line, called a linear equation, can be written as:
+
+$$
+y = mx + b
+$$
+:::
+
+::: proof
+This is obvious.
+:::
+
+See @thm-line.
+
+::: {#exr-mlm-to-lm}
+Deduce the equations for linear regression (@prp-lm) from @thm-line.
+:::
+
+::: callout-tip
+## Tip with Caption
+
+This is an example of a callout with a caption.
+:::
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{python}
+#| code-fold: true
+#| code-summary: Make a Numpy array with evenly spaced numbers.
+import numpy as np
+x = np.linspace(-1, 1, 10)
+x
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+```{python}
+#| code-fold: true
+#| code-summary: Print out all available data sets in the seaborn library.
+import seaborn as sns
+from pprint import pp
+pp(sns.get_dataset_names(), compact = True)
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: Load and print excecise data.
+exercise = sns.load_dataset("exercise")
+exercise.head()
+```
+
+```{mermaid}
+flowchart LR
+  A[Hard edge] --> B(Round edge)
+  B --> C{Decision}
+  C --> D[Result one]
+  C --> E[Result two]
+```

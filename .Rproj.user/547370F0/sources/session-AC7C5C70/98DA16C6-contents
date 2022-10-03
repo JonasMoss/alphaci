@@ -1,0 +1,43 @@
+library("future.apply")
+plan(multisession)
+
+x <- na.omit(psychTools::bfi[, 1:5])
+k <- 5
+rho <- 0.5
+phi <- 2
+sigma <- matrix(phi^2 * rho, k, k)
+diag(sigma) <- phi^2
+var_ell(sigma, kurt = 1) - var_ell(sigma, kurt = 1, parallel = TRUE)
+# 1.526557e-16
+
+set.seed(313)
+x = simulate_tau(10, k, 1, 3)
+true = alpha(rep(3, k), rep(1, k))
+
+alphaci(x, bootstrap = TRUE, transform = "fisher")
+alphaci(x, bootstrap = TRUE, transform = "none")
+alphaci(x)
+alphaci(x, type = "elliptical")
+alphaci(x, type = "elliptical", parallel = TRUE)
+
+
+set.seed(313)
+x = simulate_tau(10, k, 3, 1)
+true = alpha(rep(1, k), rep(3, k))
+transformer = transformer_log
+boots = studentized_boots(
+  n_reps = 5000,
+  x = x,
+  type = "adf",
+  parallel = FALSE,
+  transformer = transformer)
+
+hist(boots, freq = FALSE, breaks = 50)
+
+sd = sqrt(avar(x, cov(x), type = "adf", parallel = FALSE))
+transformer$inv(alpha(cov(x)) + quantile(boots, c(0.025, 0.975)) * sd)
+
+hist(boots, breaks = 200, freq = FALSE)
+
+skewness(boots)
+kurtosis(boots)
