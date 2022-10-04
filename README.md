@@ -147,13 +147,13 @@ packages use some sort of normality assumption.
 The `alpha` and `alpha.ci` functions of
 [`psych`](https://personality-project.org/r/psych/) calculates
 confidence intervals for coefficient alpha following normal theory.
-[semTools](https://cran.r-project.org/web/packages/semTools/index.html)
+[`semTools`](https://cran.r-project.org/web/packages/semTools/index.html)
 calculates numerous reliability coefficients with its `reliability`
 function. The
-[Cronbach](https://cran.r-project.org/web/packages/Cronbach/index.html)
+[`Cronbach`](https://cran.r-project.org/web/packages/Cronbach/index.html)
 package provides confidence intervals based on normal theory, as does
 the `alpha.CI` function of
-[`psychometric`](https://cran.r-project.org/web/packages/psychometric/index.html)
+[`psychometric`](https://cran.r-project.org/web/packages/psychometric/index.html).
 Confidence intervals for both alphas can, in principle, be calculated
 using structural equation modeling together with the delta method.
 Packages such as
