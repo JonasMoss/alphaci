@@ -14,7 +14,8 @@ coverage](https://codecov.io/gh/JonasMoss/alphaci/branch/main/graph/badge.svg)](
 An `R` package for doing inference with coefficient alpha (Cronbach,
 1951) and standardized alpha (Falk & Savalei, 2011). Many methods are
 supported, with special emphasis on small samples and non-normality.
-***Note:*** This package is under active development along with a
+
+***Note:*** This package is under active development! Along with a
 companion paper.
 
 ## Installation
