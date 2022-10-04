@@ -10,11 +10,11 @@ Authors@R: c(
 Description: Calculate confidence intervals for alpha and standardized alpha 
    using asymptotic theory or the studentized bootstrap. 
    Supports several transformations. Supports 
-   the asymptotic distribution-free method of 
-   Maydeu-Olivares, et al. (2007) <doi:10.1037/1082-989X.12.2.157>, 
+   the asymptotic distribution-free method 
+   (Maydeu-Olivares, et al., 2007) <doi:10.1037/1082-989X.12.2.157>, 
    the pseudo-elliptical method of 
    Yuan & Bentler (2002) <doi:10.1007/BF02294845>, and the normal method of
-   van Zyl et al. (1999) <10.1007/BF02296146>, for both coefficient alpha and
+   (van Zyl et al., 1999) <10.1007/BF02296146>, for both coefficient alpha and
    standardized alpha.
 License: MIT + file LICENSE
 Encoding: UTF-8
