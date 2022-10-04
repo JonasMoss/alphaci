@@ -1,11 +1,21 @@
 Package: alphaci
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Title: Confidence Intervals for Coefficient Alpha and Standardized Alpha
+Version: 1.0.0
+Authors@R: c(
+    person("Jonas", "Moss", , "jonas.moss.statistics@gmail.com", 
+      role = c("aut", "cre"), 
+      comment = c(ORCID = "0000-0002-6876-6964")
+    ))
+Description: Calculate confidence intervals for alpha and standardized alpha 
+   using asymptotic theory or the studentized bootstrap. 
+   Supports several transformations. Supports 
+   the asymptotic distribution-free method of 
+   Maydeu-Olivares, et al. (2007) <doi:10.1037/1082-989X.12.2.157>, 
+   the pseudo-elliptical method of 
+   Yuan & Bentler (2002) <doi:10.1007/BF02294845>, and the normal method of
+   van Zyl et al. (1999) <10.1007/BF02296146>, for both coefficient alpha and
+   standardized alpha.
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.2.1

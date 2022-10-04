@@ -71,6 +71,7 @@ alphaci_std(x)
 | `adf`        | The asymptotic distribution free method (Maydeu-Olivares et al. 2007). The method is asymptotically correct, but has poor small-sample performance.                                                                                                              |
 | `elliptical` | The elliptical or pseudo-elliptical kurtosis correction (Yuan & Bentler, 2002). Uses the unbiased sample estimator of the common kurtosis (Joanes, 1998). Has better small-sample performance than `adf` and `normal` if the kurtosis is large and $n$ is small. |
 | `normal`     | Assumes normality of $X$ (van Zyl et al., 1999). This method is not recommended since it yields too short confidence intervals when the excess kurtosis of $X$ is larger than $0$.                                                                               |
+Standardized alpha, computed with `alpha_std`, support the same `type` arguments. Their formulas can be derived using the methods of Hayashi and Kamata (2005) and Neudecker (2007).
 
 In addition, you may transform the intervals using one of four transforms:
 
@@ -96,3 +97,6 @@ If you encounter a bug, have a feature request or need some help, open a [Github
 -   van Zyl, J. M., Neudecker, H., & Nel, D. G. (2000). On the distribution of the maximum likelihood estimator of Cronbach's alpha. Psychometrika, 65(3), 271-280. https://doi.org/10.1007/BF02296146
 -   Yuan, K.-H., & Bentler, P. M. (2002). On robustness of the normal-theory based asymptotic distributions of three reliability coefficient estimates. Psychometrika, 67(2), 251-259. https://doi.org/10.1007/BF02294845
 -   Joanes, D. N., & Gill, C. A. (1998). Comparing measures of sample skewness and kurtosis. Journal of the Royal Statistical Society: Series D (The Statistician), 47(1), 183-189. https://doi.org/10.1111/1467-9884.00122
+- Hayashi, K., & Kamata, A. (2005). A note on the estimator of the alpha coefficient for standardized variables under normality. Psychometrika, 70(3), 579-586. https://doi.org/10.1007/s11336-001-0888-1
+- Neudecker, H. (2006). On the Asymptotic Distribution of the “Natural” Estimator of Cronbach’s Alpha with Standardised Variates under Nonnormality, Ellipticity and Normality. In P. Brown, S. Liu, & D. Sharma (Eds.), Contributions to Probability and Statistics: Applications and Challenges (pp. 167-171). World Scientific. https://doi.org/10.1142/9789812772466_0013
+

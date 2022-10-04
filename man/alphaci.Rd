@@ -76,7 +76,9 @@ elliptical or pseudo-elliptical distribution of the data. The resulting
 confidence intervals are corrected variants of the normal theory
 intervals with a kurtosis correction (Yuan & Bentler 2002). The
 common kurtosis parameter is calculated using the unbiased sample
-kurtosis (Joanes, 1998).
+kurtosis (Joanes, 1998). All these methods have analogues for
+standardized alpha, which can be derived using the methods of Hayashi &
+Kamata (2005) and Neudecker (2006).
 }
 \examples{
 library("alphaci")
@@ -100,4 +102,8 @@ van Zyl, J. M., Neudecker, H., & Nel, D. G. (2000). On the distribution of the m
 Yuan, K.-H., & Bentler, P. M. (2002). On robustness of the normal-theory based asymptotic distributions of three reliability coefficient estimates. Psychometrika, 67(2), 251-259. https://doi.org/10.1007/BF02294845
 
 Joanes, D. N., & Gill, C. A. (1998). Comparing measures of sample skewness and kurtosis. Journal of the Royal Statistical Society: Series D (The Statistician), 47(1), 183-189. https://doi.org/10.1111/1467-9884.00122
+
+Hayashi, K., & Kamata, A. (2005). A note on the estimator of the alpha coefficient for standardized variables under normality. Psychometrika, 70(3), 579-586. https://doi.org/10.1007/s11336-001-0888-1
+
+Neudecker, H. (2006). On the Asymptotic Distribution of the “Natural” Estimator of Cronbach’s Alpha with Standardised Variates under Nonnormality, Ellipticity and Normality. In P. Brown, S. Liu, & D. Sharma (Eds.), Contributions to Probability and Statistics: Applications and Challenges (pp. 167-171). World Scientific. https://doi.org/10.1142/9789812772466_0013
 }
