@@ -1,16 +1,29 @@
-#' Estimate coefficient alpha with a confidence interval.
+#' Confidence intervals for alpha and standardized alpha
 #'
-#' This function makes use of `future.apply` when bootstrapping. Supports
-#'    both ordinary coefficient alpha (`alphaci`) and standardized coefficient
-#'    alpha (`alphaci_std`).
+#' Calculate confidence intervals for coefficient alpha (Cronbach, 1951)
+#'    and standardized alpha (Falk & Savalei, 2011) using asymptotic methods
+#'    or the studentized bootstrap. `alphaci` constructs confidence intervals
+#'    for coefficient alpha and `alphaci_std` for standardized alpha.
 #'
-#' None of the methods accept missing data.
+#' The methods accept handle missing data using [`stats::na.omit`], i.e., rows
+#'    containing missing data are removed. The bootstrap option uses the
+#'    studentized bootstrap (Efron, B. 1987), which is second order correct.
+#'    Both functions makes use of [`future.apply`] when bootstrapping.
 #'
-#'
+#' The `type` variables defaults to `adf`, asymptotically distribution-free,
+#'    which is consistent when the fourth moment is finite
+#'    (Maydeu-Olivares et al. 2007). The `normal` option assumes normality.
+#'    (van Zyl et al. 1999), and is not concistent for models with excess
+#'    kurtosis unequal to `0`. The `elliptical` option assumes an
+#'    elliptical or pseudo-elliptical distribution of the data. The resulting
+#'    confidence intervals are corrected variants of the normal theory
+#'    intervals with a kurtosis correction (Yuan & Bentler 2002). The
+#'    common kurtosis parameter is calculated using the unbiased sample
+#'    kurtosis (Joanes, 1998).
 #'
 #' @export
 #' @param x Input data data can be converted to a matrix using `as.matrix`.
-#'   Missing values will be ignored.
+#'   Rows containing missing values are ignored.
 #' @param type Type of confidence interval. Either `adf`, `elliptical`, or
 #'   `normal`.
 #' @param transform One of `"none"`, `"log"`, `"fisher"`, and `"arcsin`.
@@ -19,12 +32,13 @@
 #'   parallel model. Defaults to `FALSE`.
 #' @param alternative A character string specifying the alternative hypothesis,
 #'   must be one of `"two.sided"` (default), `"greater"` or `"less"`.
-#' @param conf_level Confidence level.
+#' @param conf_level Confidence level. Defaults to `0.95`.
 #' @param bootstrap If `TRUE`, performs a studentized bootstrap with `n_reps`
 #'   repetitions. Defaults to `FALSE`.
 #' @param n_reps Number of bootstrap samples if `bootstrap = TRUE`. Ignored if
 #'   `bootstrap = FALSE`. Defaults to `1000`.
 #' @return A vector of class `alphaci` containing the confidence end points.
+#'   The arguments of the function call are included as attributes.
 #' @name alphaci
 #' @examples
 #' library("alphaci")
@@ -33,7 +47,20 @@
 #' x[, 1] <- 7 - x[, 1] # Reverse-coded item.
 #' alphaci(x)
 #' alphaci_std(x)
+#' @references
+#' Falk, C. F., & Savalei, V. (2011). The relationship between unstandardized and standardized alpha, true reliability, and the underlying measurement model. Journal of Personality Assessment, 93(5), 445-453. https://doi.org/10.1080/00223891.2011.594129
 #'
+#' Cronbach, L. J. (1951). Coefficient alpha and the internal structure of tests. Psychometrika, 16(3), 297-334. https://doi.org/10.1007/BF02310555#'
+#'
+#' Efron, B. (1987). Better Bootstrap Confidence Intervals. Journal of the American Statistical Association, 82(397), 171-185. https://doi.org/10.2307/2289144
+#'
+#' Maydeu-Olivares, A., Coffman, D. L., & Hartmann, W. M. (2007). Asymptotically distribution-free (ADF) interval estimation of coefficient alpha. Psychological Methods, 12(2), 157-176. https://doi.org/10.1037/1082-989X.12.2.157
+#'
+#' van Zyl, J. M., Neudecker, H., & Nel, D. G. (2000). On the distribution of the maximum likelihood estimator of Cronbach's alpha. Psychometrika, 65(3), 271-280. https://doi.org/10.1007/BF02296146
+#'
+#' Yuan, K.-H., & Bentler, P. M. (2002). On robustness of the normal-theory based asymptotic distributions of three reliability coefficient estimates. Psychometrika, 67(2), 251-259. https://doi.org/10.1007/BF02294845
+#'
+#' Joanes, D. N., & Gill, C. A. (1998). Comparing measures of sample skewness and kurtosis. Journal of the Royal Statistical Society: Series D (The Statistician), 47(1), 183-189. https://doi.org/10.1111/1467-9884.00122
 alphaci <- function(x,
                     type = c("adf", "elliptical", "normal"),
                     transform = "none",
@@ -43,17 +70,8 @@ alphaci <- function(x,
                     bootstrap = FALSE,
                     n_reps = 1000) {
   call <- match.call()
-  alphaci_(x,
-    type,
-    transform,
-    parallel,
-    conf_level,
-    alternative,
-    bootstrap,
-    n_reps,
-    standardized = FALSE,
-    call
-  )
+  args <- sapply(names(formals()), str2lang)
+  do.call(what = alphaci_, c(args, call = quote(call), standardized = TRUE))
 }
 
 #' @export
@@ -67,19 +85,11 @@ alphaci_std <- function(x,
                         bootstrap = FALSE,
                         n_reps = 1000) {
   call <- match.call()
-  alphaci_(x,
-    type,
-    transform,
-    parallel,
-    conf_level,
-    alternative,
-    bootstrap,
-    n_reps,
-    standardized = TRUE,
-    call
-  )
+  args <- sapply(names(formals()), str2lang)
+  do.call(what = alphaci_, c(args, call = quote(call), standardized = FALSE))
 }
 
+#' @keywords internal
 alphaci_ <- function(x,
                      type = c("adf", "elliptical", "normal"),
                      transform,
@@ -88,8 +98,8 @@ alphaci_ <- function(x,
                      alternative = c("two.sided", "greater", "less"),
                      bootstrap,
                      n_reps,
-                     standardized,
-                     call) {
+                     call,
+                     standardized) {
   type <- match.arg(type)
   alternative <- match.arg(alternative)
   transformer <- get_transformer(transform)
