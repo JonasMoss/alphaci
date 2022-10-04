@@ -4,10 +4,14 @@
 \alias{gamma_mat}
 \title{Gamma matrix}
 \usage{
-gamma_mat(x)
+gamma_mat(x, sigma, type = "adf")
 }
 \arguments{
 \item{x}{A numeric matrix of observations.}
+
+\item{sigma}{Covariance matrix of the data.}
+
+\item{type}{One of \code{adf}, \code{normal} and \code{elliptical}.}
 }
 \value{
 The sample estimate of the gamma matrix.

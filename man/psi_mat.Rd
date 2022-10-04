@@ -4,14 +4,14 @@
 \alias{psi_mat}
 \title{Psi matrix}
 \usage{
-psi_mat(x, sigma, normal = FALSE)
+psi_mat(x, sigma, type = "adf")
 }
 \arguments{
 \item{x}{A numeric matrix of observations.}
 
 \item{sigma}{Covariance matrix.}
 
-\item{normal}{If \code{TRUE}, returns the psi matrix under normality.}
+\item{type}{One of \code{adf}, \code{normal} and \code{elliptical}.}
 }
 \value{
 The sample estimate of the psi matrix.

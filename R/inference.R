@@ -66,7 +66,7 @@
 #'
 #' Hayashi, K., & Kamata, A. (2005). A note on the estimator of the alpha coefficient for standardized variables under normality. Psychometrika, 70(3), 579-586. https://doi.org/10.1007/s11336-001-0888-1
 #'
-#' Neudecker, H. (2006). On the Asymptotic Distribution of the “Natural” Estimator of Cronbach’s Alpha with Standardised Variates under Nonnormality, Ellipticity and Normality. In P. Brown, S. Liu, & D. Sharma (Eds.), Contributions to Probability and Statistics: Applications and Challenges (pp. 167-171). World Scientific. https://doi.org/10.1142/9789812772466_0013
+#' Neudecker, H. (2006). On the Asymptotic Distribution of the Natural Estimator of Cronbach<U+2019>s Alpha with Standardised Variates under Nonnormality, Ellipticity and Normality. In P. Brown, S. Liu, & D. Sharma (Eds.), Contributions to Probability and Statistics: Applications and Challenges (pp. 167-171). World Scientific. https://doi.org/10.1142/9789812772466_0013
 
 alphaci <- function(x,
                     type = c("adf", "elliptical", "normal"),

@@ -1,65 +1,102 @@
-#' Calculate the asymptotic variance.
-#' @param x Data to estimate alpha on.
-#' @param sigma Covariance matrix of x.
-#' @param type Type of confidence interval. Either `adf`, `elliptical`, or
-#'   `normal`.
-#' @param transform Choose between `"fisher"` and `"none"`.
-#' @param parallel If `TRUE`, makes calculations under the assumption of a
-#'   parallel model.
-#' @keywords internal
-#' @return Asymptotic variance.
 avar <- function(x, sigma, type, parallel) {
-  n <- nrow(x)
-  k <- ncol(sigma)
-  if (type == "elliptical" || type == "normal") {
-    g2 <- \(x) mean((x - mean(x))^4) / stats::var(x)^2
-    kurtosis <- \(x) (n - 1) / ((n - 2) * (n - 3)) * ((n + 1) * g2(x) + 6)
-    kurt <- if (type == "normal") 0 else mean(apply(x, 2, kurtosis)) - 3
-    var_ell(sigma, kurt, parallel)
+  if (parallel) {
+    if (type == "normal" || type == "elliptical") {
+      avar_parallel_elliptical(alpha(sigma), x, type)
+    } else {
+      avar_parallel_adf(alpha(sigma), sigma, gamma_mat(x, type = "adf"))
+    }
   } else {
-    gamma_mat_ <- gamma_mat(x)
-    d_mat <- matrixcalc::D.matrix(k)
-    vec <- t(d_mat) %*% (tr(sigma) * rep(1, k^2) - sum(sigma) * c(diag(k)))
-    c(t(vec) %*% gamma_mat_ %*% vec) / sum(sigma)^4 * (k / (k - 1))^2
+    if (type == "normal" || type == "elliptical") {
+      avar_elliptical(x, sigma, type)
+    } else {
+      avar_adf(x, sigma)
+    }
   }
 }
 
-#' Theoretical variance for the elliptical model.
-#' @param sigma Covariance matrix.
-#' @param kurt Common kurtosis parameter.
-#' @param parallel If `TRUE`, calculates the variance under assumption of
-#'    a parallel model.
-#' @return Theoretical variance.
-#' @keywords internal
-var_ell <- function(sigma, kurt = 0, parallel = FALSE) {
-  k <- ncol(sigma)
-  corr <- (1 + kurt / 3)
+avar_std <- function(x, sigma, type, parallel) {
   if (parallel) {
-    2 * k / (k - 1) * corr * (1 - alpha(sigma))^2
+    if (type == "normal" || type == "elliptical") {
+      avar_parallel_elliptical(alpha_std(sigma), x, type)
+    } else {
+      avar_parallel_adf(alpha_std(sigma), sigma, gamma_mat(x, type = "adf"))
+    }
   } else {
-    sigma2 <- sigma %*% sigma
-    sum_s <- sum(sigma)
-    tr_s <- tr(sigma)
-    sum_s2 <- sum(sigma2)
-    tr_s2 <- tr(sigma2)
-    q_diff <- sum_s * (tr_s2 + tr_s^2) - 2 * tr_s * sum_s2
-    q_mult <- 2 * corr * (k^2 / (k - 1)^2) / sum_s^3
-    q_diff * q_mult
+    avar_std_adf(x, sigma, type)
   }
+}
+
+avar_adf <- function(x, sigma) {
+  k <- ncol(sigma)
+  gamma_mat_ <- gamma_mat(x)
+  d_mat <- matrixcalc::D.matrix(k)
+  vec <- t(d_mat) %*% (tr(sigma) * rep(1, k^2) - sum(sigma) * c(diag(k)))
+  c(t(vec) %*% gamma_mat_ %*% vec) / sum(sigma)^4 * (k / (k - 1))^2
+}
+
+avar_elliptical <- function(x, sigma, type) {
+  corr <- kurtosis_correction(x, type)
+  k <- ncol(sigma)
+  sigma2 <- sigma %*% sigma
+  sum_s <- sum(sigma)
+  tr_s <- tr(sigma)
+  sum_s2 <- sum(sigma2)
+  tr_s2 <- tr(sigma2)
+  q_diff <- sum_s * (tr_s2 + tr_s^2) - 2 * tr_s * sum_s2
+  q_mult <- 2 * corr * (k^2 / (k - 1)^2) / sum_s^3
+  q_diff * q_mult
+}
+
+avar_parallel_elliptical <- function(alpha, x, type) {
+  k <- ncol(x)
+  2 * k / (k - 1) * (1 - alpha)^2 * kurtosis_correction(x, type)
+}
+
+avar_parallel_adf <- function(alpha, sigma, gamma) {
+  k <- ncol(sigma)
+  corr <- cov2cor(sigma)
+  rho <- (sum(corr) - k) / (k * (k - 1))
+  phi <- sqrt(mean(diag(sigma)))
+  nu <- ((k - 1) * rho + 1) * c(diag(k)) - rep(1, k^2)
+  if(nrow(gamma) < k ^ 2) {
+    d_mat <- matrixcalc::D.matrix(k)
+    gamma <- d_mat %*% gamma %*% t(d_mat)
+  }
+  c(alpha^4 / (k - 1)^2 * (k * rho * phi)^(-4) * t(nu) %*% gamma %*% nu)
+}
+
+avar_std_adf <- function(x, sigma, type) {
+  k <- ncol(sigma)
+  phi <- cov2cor(sigma)
+  psi_mat_ <- psi_mat(x, sigma, type)
+  gs_ <- gs(phi)
+  c(t(gs_) %*% psi_mat_ %*% gs_) / sum(phi)^4 * (k / (k - 1))^2
 }
 
 #' Gamma matrix
 #'
 #' Calculate the gamma matrix from a matrix of observations.
 #' @param x A numeric matrix of observations.
+#' @param sigma Covariance matrix of the data.
+#' @param type One of `adf`, `normal` and `elliptical`.
 #' @return The sample estimate of the gamma matrix.
 #' @keywords internal
-gamma_mat <- function(x) {
-  i_row <- \(n) unlist(lapply(seq_len(n), seq.int, n))
-  i_col <- \(n) rep.int(seq_len(n), times = rev(seq_len(n)))
-  y <- t(x) - colMeans(x, na.rm = TRUE)
-  z <- y[i_col(ncol(x)), , drop = FALSE] * y[i_row(ncol(x)), , drop = FALSE]
-  base::tcrossprod(z - rowMeans(z, na.rm = TRUE)) / nrow(x)
+gamma_mat <- function(x, sigma, type = "adf") {
+  if(type == "adf") {
+    i_row <- \(n) unlist(lapply(seq_len(n), seq.int, n))
+    i_col <- \(n) rep.int(seq_len(n), times = rev(seq_len(n)))
+    y <- t(x) - colMeans(x, na.rm = TRUE)
+    z <- y[i_col(ncol(x)), , drop = FALSE] * y[i_row(ncol(x)), , drop = FALSE]
+    base::tcrossprod(z - rowMeans(z, na.rm = TRUE)) / nrow(x)
+  } else {
+    gamma_mat_normal(sigma) * kurtosis_correction(x, type = type)
+  }
+}
+
+gamma_mat_normal <- function(sigma) {
+  k <- ncol(sigma)
+  k_mat <- matrixcalc::K.matrix(k)
+  ((diag(k^2) + k_mat) %*% (sigma %x% sigma))
 }
 
 #' Psi matrix
@@ -67,21 +104,19 @@ gamma_mat <- function(x) {
 #' Calculate the psi matrix from a matrix of observations.
 #' @param x A numeric matrix of observations.
 #' @param sigma Covariance matrix.
-#' @param normal If `TRUE`, returns the psi matrix under normality.
+#' @param type One of `adf`, `normal` and `elliptical`.
 #' @return The sample estimate of the psi matrix.
 #' @keywords internal
-psi_mat <- function(x, sigma, normal = FALSE) {
+psi_mat <- function(x, sigma, type = "adf") {
   d_mat <- matrixcalc::D.matrix(ncol(sigma))
   sigma_d <- diag(1 / sqrt(diag(sigma)))
   sdxsd <- (sigma_d %x% sigma_d)
-  if (!normal) {
+  if (type == "adf") {
     multiplier <- sdxsd %*% d_mat
     mat <- gamma_mat(x)
   } else {
-    k <- ncol(sigma)
-    k_mat <- matrixcalc::K.matrix(k)
     multiplier <- sdxsd
-    mat <- ((diag(k^2) + k_mat) %*% (sigma %x% sigma))
+    mat <- gamma_mat_normal(sigma) * kurtosis_correction(x, type)
   }
   multiplier %*% mat %*% t(multiplier)
 }
@@ -89,6 +124,8 @@ psi_mat <- function(x, sigma, normal = FALSE) {
 #' The gs vector used in the asymptotic variance of standardized alpha.
 #'
 #' @param x Correlation matrix.
+#' @param parallel If `TRUE`, returns the value of `gs` under the parallel
+#'   model.
 #' @return The gs vector.
 #' @keywords internal
 gs <- function(phi) {
@@ -98,34 +135,20 @@ gs <- function(phi) {
   k - k * k_mat_d %*% c(phi %*% matrix(1, k, k))
 }
 
-#' Calculate the asymptotic variance.
-#' @param x Data to estimate alpha on.
-#' @param sigma Covariance matrix of x.
-#' @param type Type of confidence interval. Either `adf`, `elliptical`, or
-#'   `normal`.
-#' @param transform Choose between `"fisher"` and `"none"`.
-#' @param parallel If `TRUE`, makes calculations under the assumption of a
-#'   parallel model.
-#' @keywords internal
-#' @return Asymptotic variance if standardized alpha.
-avar_std <- function(x, sigma, type, parallel) {
+#' Calculate unbiased sample kurtosis.
+#' @param x Matrix of valus.
+#' @return Unbiased sample kurtosis.
+kurtosis <- function(x) {
   n <- nrow(x)
-  k <- ncol(sigma)
-  normal <- FALSE
-  corr <- 1
-  if (type == "elliptical" || type == "normal") {
-    g2 <- \(x) mean((x - mean(x))^4) / stats::var(x)^2
-    kurtosis <- \(x) (n - 1) / ((n - 2) * (n - 3)) * ((n + 1) * g2(x) + 6)
-    kurt <- if (type == "normal") 0 else mean(apply(x, 2, kurtosis)) - 3
-    corr <- (1 + kurt / 3)
-    if (parallel) {
-      return(2 * k / (k - 1) * corr * (1 - alpha_std(sigma))^2)
-    }
-    normal <- TRUE
-  }
+  g2 <- \(x) mean((x - mean(x))^4) / stats::var(x)^2
+  kurtosis <- \(x) (n - 1) / ((n - 2) * (n - 3)) * ((n + 1) * g2(x) + 6)
+  mean(apply(x, 2, kurtosis)) - 3
+}
 
-  phi <- stats::cov2cor(sigma)
-  psi_mat_ <- corr * psi_mat(x, sigma, normal = normal)
-  gs_ <- gs(phi)
-  c(t(gs_) %*% psi_mat_ %*% gs_) / sum(phi)^4 * (k / (k - 1))^2
+#' Calculate kurtosis correction
+#' @param x Matrix of values
+#' @param type The type of correction, either "normal" or "elliptical".
+kurtosis_correction <- function(x, type) {
+  kurt <- if (type == "normal") 0 else kurtosis(x)
+  1 + kurt / 3
 }
