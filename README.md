@@ -138,6 +138,28 @@ asymptotic variance of alpha and standardized alpha to
 where ![\kappa](https://latex.codecogs.com/svg.latex?%5Ckappa "\kappa")
 is the common kurtosis parameter.
 
+## Similar software
+
+There are several `R` packages that make confidence intervals for
+coefficient alpha, but not much support for standardized alpha. Most
+packages use some sort of normality assumption.
+
+The `alpha` and `alpha.ci` functions of
+[`psych`](https://personality-project.org/r/psych/) calculates
+confidence intervals for coefficient alpha following normal theory.
+[semTools](https://cran.r-project.org/web/packages/semTools/index.html)
+calculates numerous reliability coefficients with its `reliability`
+function. The
+[Cronbach](https://cran.r-project.org/web/packages/Cronbach/index.html)
+package provides confidence intervals based on normal theory, as does
+the `alpha.CI` function of
+[`psychometric`](https://cran.r-project.org/web/packages/psychometric/index.html)
+Confidence intervals for both alphas can, in principle, be calculated
+using structural equation modeling together with the delta method.
+Packages such as
+[`lavaan`](https://cran.r-project.org/web/packages/lavaan/index.html)
+can be used for this purpose, but this is seldom done.
+
 ## How to Contribute or Get Help
 
 If you encounter a bug, have a feature request or need some help, open a

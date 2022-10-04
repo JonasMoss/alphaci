@@ -54,7 +54,7 @@ avar_parallel_elliptical <- function(alpha, x, type) {
 
 avar_parallel_adf <- function(alpha, sigma, gamma) {
   k <- ncol(sigma)
-  corr <- cov2cor(sigma)
+  corr <- stats::cov2cor(sigma)
   rho <- (sum(corr) - k) / (k * (k - 1))
   phi <- sqrt(mean(diag(sigma)))
   nu <- ((k - 1) * rho + 1) * c(diag(k)) - rep(1, k^2)
@@ -67,7 +67,7 @@ avar_parallel_adf <- function(alpha, sigma, gamma) {
 
 avar_std_adf <- function(x, sigma, type) {
   k <- ncol(sigma)
-  phi <- cov2cor(sigma)
+  phi <- stats::cov2cor(sigma)
   psi_mat_ <- psi_mat(x, sigma, type)
   gs_ <- gs(phi)
   c(t(gs_) %*% psi_mat_ %*% gs_) / sum(phi)^4 * (k / (k - 1))^2
