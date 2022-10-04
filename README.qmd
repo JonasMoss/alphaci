@@ -16,18 +16,9 @@ knitr::opts_chunk$set(
 
 # alphaci <img src="man/figures/logo.png" align="right" width="160" height="135"/>
 
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/alphaci)](https://cran.r-project.org/package=alphaci)
-[![R-CMD-check](https://github.com/JonasMoss/alphaci/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JonasMoss/alphaci/actions/workflows/R-CMD-check.yaml)
-[![Project Status: Active -- The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Codecov test
-coverage](https://codecov.io/gh/JonasMoss/alphaci/branch/main/graph/badge.svg)](https://app.codecov.io/gh/JonasMoss/alphaci?branch=main)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/alphaci)](https://cran.r-project.org/package=alphaci) [![R-CMD-check](https://github.com/JonasMoss/alphaci/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JonasMoss/alphaci/actions/workflows/R-CMD-check.yaml) [![Project Status: Active -- The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![Codecov test coverage](https://codecov.io/gh/JonasMoss/alphaci/branch/main/graph/badge.svg)](https://app.codecov.io/gh/JonasMoss/alphaci?branch=main)
 
-An `R` package for doing inference with coefficient alpha and
-standardized alpha. Many methods are supported, with special emphasis on
-small samples and non-normality. ***Note:*** This package is under
-active development along with a companion paper.
+An `R` package for doing inference with coefficient alpha (Cronbach, 1951) and standardized alpha (Falk & Savalei, 2011). Many methods are supported, with special emphasis on small samples and non-normality. ***Note:*** This package is under active development along with a companion paper.
 
 ```{r setup, include=FALSE}
 #library("alphaci")
@@ -37,8 +28,7 @@ knitr::opts_chunk$set(out.width='750px', dpi=200)
 
 ## Installation
 
-The package is not available on `CRAN` yet, so use the following command
-from inside `R`:
+The package is not available on `CRAN` yet, so use the following command from inside `R`:
 
 ```{r install, echo = TRUE, eval = FALSE}
 # install.packages("remotes")
@@ -57,8 +47,7 @@ x[, 1] <- 7 - x[, 1] # Reverse-coded item.
 head(x)
 ```
 
-Then calculate an asymptotically distribution-free confidence interval
-for $\alpha$,
+Then calculate an asymptotically distribution-free confidence interval for $\alpha$,
 
 ```{r}
 alphaci(x)
@@ -73,51 +62,35 @@ alphaci_std(x)
 
 ## Supported techniques
 
-`alphaci` supports three basic asymptotic confidence interval
-constructios. The asymptotically distribution-free interval of
-@Maydeu-Olivares2007-zh, the pseudo-elliptical construction of
-@Yuan2002-oy, and the normal method of @Van_Zyl2000-si.
+`alphaci` supports three basic asymptotic confidence interval constructios. The asymptotically distribution-free interval of Maydeu-Olivares et al. 2007, the pseudo-elliptical construction of Yuan & Bentler (2002), and the normal method of van Zyl et al., (1999).
 
-| Method       | Description                                                                                                                                                                                                                                                |
-|--------------------------------|----------------------------------------|
-| `adf`        | The asymptotic distribution free method [@Maydeu-Olivares2007-zh]. The method is asymptotically correct, but has poor small-sample performance.                                                                                                            |
-| `elliptical` | The elliptical or pseudo-elliptical kurtosis correction [@Yuan2002-oy]. Uses the unbiased sample estimator of the common kurtosis [@Joanes1998-jo]. Has better small-sample performance than `adf` and `normal` if the kurtosis is large and $n$ is small. |
-| `normal`     | Assumes normality of $X$ [@Van_Zyl2000-si]. This method is not recommended since it yields too short confidence intervals when the excess kurtosis of $X$ is larger than $0$.                                                                              |
+| Method       | Description                                                                                                                                                                                                                                                      |
+|------------|------------------------------------------------------------|
+| `adf`        | The asymptotic distribution free method (Maydeu-Olivares et al. 2007). The method is asymptotically correct, but has poor small-sample performance.                                                                                                              |
+| `elliptical` | The elliptical or pseudo-elliptical kurtosis correction (Yuan & Bentler, 2002). Uses the unbiased sample estimator of the common kurtosis (Joanes, 1998). Has better small-sample performance than `adf` and `normal` if the kurtosis is large and $n$ is small. |
+| `normal`     | Assumes normality of $X$ (van Zyl et al., 1999). This method is not recommended since it yields too short confidence intervals when the excess kurtosis of $X$ is larger than $0$.                                                                               |
 
-In addition, you may transform the intervals using one of four
-transforms:
+In addition, you may transform the intervals using one of four transforms:
 
-1.  The [Fisher
-    transform](https://en.wikipedia.org/wiki/Fisher_transformation), or
-    $\alpha\mapsto \operatorname{artanh}(\alpha)$. Famously used in
-    inference for the correlation coefficient.
-2.  The $\log$ transform, where $\alpha \mapsto \log(1-\alpha)$. This is
-    an asymptotic pivot under the elliptical model with parallel items.
+1.  The [Fisher transform](https://en.wikipedia.org/wiki/Fisher_transformation), or $\alpha\mapsto \operatorname{artanh}(\alpha)$. Famously used in inference for the correlation coefficient.
+2.  The $\log$ transform, where $\alpha \mapsto \log(1-\alpha)$. This is an asymptotic pivot under the elliptical model with parallel items.
 3.  The identity transform. The default option.
-4.  The [$\arcsin$
-    transform](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions).
-    This transform might fail when $n$ is small, as negative values for
-    $\hat{\alpha}$ is possible, but $\arcsin$ do not accept them,
+4.  The [$\arcsin$ transform](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions). This transform might fail when $n$ is small, as negative values for $\hat{\alpha}$ is possible, but $\arcsin$ do not accept them,
 
-The option `bootstrap` does studentized bootstrapping [@Efron1987-ov]
-with `n_reps` repetitions. If `bootstrap = FALSE`, an ordinary normal
-approximation will be used. The studentized bootstrap intervals are is a
-second-order correct, so its confidence intervals will be better than
-the normal approximation when $n$ is sufficiently large.
+The option `bootstrap` does studentized bootstrapping Efron, B. (1987) with `n_reps` repetitions. If `bootstrap = FALSE`, an ordinary normal approximation will be used. The studentized bootstrap intervals are is a second-order correct, so its confidence intervals will be better than the normal approximation when $n$ is sufficiently large.
 
-Finally, the option `parallel = TRUE` can be used, which is
-suitable if covariance matrix $\operatorname{Cov}(X)$ is compound
-symmetric. If the distribution is normal or (pseudo-)elliptic, it can be
-used to simplify the expression for the asymptotic variance of alpha and
-standardized alpha to
-$$\sigma^{2}=\frac{2k(1+\kappa/3)}{k-1}(1-\alpha)^{2},$$ where $\kappa$
-is the common kurtosis parameter.
+Finally, the option `parallel = TRUE` can be used, which is suitable if covariance matrix $\operatorname{Cov}(X)$ is compound symmetric. If the distribution is normal or (pseudo-)elliptic, it can be used to simplify the expression for the asymptotic variance of alpha and standardized alpha to $$\sigma^{2}=\frac{2k(1+\kappa/3)}{k-1}(1-\alpha)^{2},$$ where $\kappa$ is the common kurtosis parameter.
 
 ## How to Contribute or Get Help
 
-If you encounter a bug, have a feature request or need some help, open a
-[Github issue](https://github.com/JonasMoss/alphaci/issues). Create a
-pull requests to contribute. This project follows a [Contributor Code of
-Conduct](https://www.contributor-covenant.org/version/1/4/code-of-conduct.md).
+If you encounter a bug, have a feature request or need some help, open a [Github issue](https://github.com/JonasMoss/alphaci/issues). Create a pull requests to contribute. This project follows a [Contributor Code of Conduct](https://www.contributor-covenant.org/version/1/4/code-of-conduct.md).
 
 ## References
+
+-   Falk, C. F., & Savalei, V. (2011). The relationship between unstandardized and standardized alpha, true reliability, and the underlying measurement model. Journal of Personality Assessment, 93(5), 445-453. https://doi.org/10.1080/00223891.2011.594129
+-   Cronbach, L. J. (1951). Coefficient alpha and the internal structure of tests. Psychometrika, 16(3), 297-334. https://doi.org/10.1007/BF02310555#'
+-   Efron, B. (1987). Better Bootstrap Confidence Intervals. Journal of the American Statistical Association, 82(397), 171-185. https://doi.org/10.2307/2289144
+-   Maydeu-Olivares, A., Coffman, D. L., & Hartmann, W. M. (2007). Asymptotically distribution-free (ADF) interval estimation of coefficient alpha. Psychological Methods, 12(2), 157-176. https://doi.org/10.1037/1082-989X.12.2.157
+-   van Zyl, J. M., Neudecker, H., & Nel, D. G. (2000). On the distribution of the maximum likelihood estimator of Cronbach's alpha. Psychometrika, 65(3), 271-280. https://doi.org/10.1007/BF02296146
+-   Yuan, K.-H., & Bentler, P. M. (2002). On robustness of the normal-theory based asymptotic distributions of three reliability coefficient estimates. Psychometrika, 67(2), 251-259. https://doi.org/10.1007/BF02294845
+-   Joanes, D. N., & Gill, C. A. (1998). Comparing measures of sample skewness and kurtosis. Journal of the Royal Statistical Society: Series D (The Statistician), 47(1), 183-189. https://doi.org/10.1111/1467-9884.00122

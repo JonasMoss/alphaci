@@ -11,10 +11,11 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![Codecov test
 coverage](https://codecov.io/gh/JonasMoss/alphaci/branch/main/graph/badge.svg)](https://app.codecov.io/gh/JonasMoss/alphaci?branch=main)
 
-An `R` package for doing inference with coefficient alpha and
-standardized alpha. Many methods are supported, with special emphasis on
-small samples and non-normality. ***Note:*** This package is under
-active development along with a companion paper.
+An `R` package for doing inference with coefficient alpha (Cronbach,
+1951) and standardized alpha (Falk & Savalei, 2011). Many methods are
+supported, with special emphasis on small samples and non-normality.
+***Note:*** This package is under active development along with a
+companion paper.
 
 ## Installation
 
@@ -54,11 +55,11 @@ alphaci(x)
 #> 
 #> 95% confidence interval (n = 2709).
 #>     0.025     0.975 
-#> 0.6828923 0.7246195 
+#> 0.6938373 0.7331658 
 #> 
 #> Sample estimates.
 #>     alpha        sd 
-#> 0.7037559 0.5536964
+#> 0.7135016 0.5218675
 ```
 
 You can also calculate confidence intervals for standardized alpha
@@ -69,25 +70,25 @@ alphaci_std(x)
 #> 
 #> 95% confidence interval (n = 2709).
 #>     0.025     0.975 
-#> 0.6938373 0.7331658 
+#> 0.6828923 0.7246195 
 #> 
 #> Sample estimates.
 #>     alpha        sd 
-#> 0.7135016 0.5218675
+#> 0.7037559 0.5536964
 ```
 
 ## Supported techniques
 
 `alphaci` supports three basic asymptotic confidence interval
 constructios. The asymptotically distribution-free interval of
-@Maydeu-Olivares2007-zh, the pseudo-elliptical construction of
-@Yuan2002-oy, and the normal method of @Van_Zyl2000-si.
+Maydeu-Olivares et al. 2007, the pseudo-elliptical construction of Yuan
+& Bentler (2002), and the normal method of van Zyl et al., (1999).
 
-| Method       | Description                                                                                                                                                                                                                                                                                                            |
-|--------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `adf`        | The asymptotic distribution free method \[@Maydeu-Olivares2007-zh\]. The method is asymptotically correct, but has poor small-sample performance.                                                                                                                                                                      |
-| `elliptical` | The elliptical or pseudo-elliptical kurtosis correction \[@Yuan2002-oy\]. Uses the unbiased sample estimator of the common kurtosis \[@Joanes1998-jo\]. Has better small-sample performance than `adf` and `normal` if the kurtosis is large and ![n](https://latex.codecogs.com/svg.latex?n "n") is small.            |
-| `normal`     | Assumes normality of ![X](https://latex.codecogs.com/svg.latex?X "X") \[@Van_Zyl2000-si\]. This method is not recommended since it yields too short confidence intervals when the excess kurtosis of ![X](https://latex.codecogs.com/svg.latex?X "X") is larger than ![0](https://latex.codecogs.com/svg.latex?0 "0"). |
+| Method       | Description                                                                                                                                                                                                                                                                                                               |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `adf`        | The asymptotic distribution free method (Maydeu-Olivares et al. 2007). The method is asymptotically correct, but has poor small-sample performance.                                                                                                                                                                       |
+| `elliptical` | The elliptical or pseudo-elliptical kurtosis correction (Yuan & Bentler, 2002). Uses the unbiased sample estimator of the common kurtosis (Joanes, 1998). Has better small-sample performance than `adf` and `normal` if the kurtosis is large and ![n](https://latex.codecogs.com/svg.latex?n "n") is small.             |
+| `normal`     | Assumes normality of ![X](https://latex.codecogs.com/svg.latex?X "X") (van Zyl et al., 1999). This method is not recommended since it yields too short confidence intervals when the excess kurtosis of ![X](https://latex.codecogs.com/svg.latex?X "X") is larger than ![0](https://latex.codecogs.com/svg.latex?0 "0"). |
 
 In addition, you may transform the intervals using one of four
 transforms:
@@ -113,7 +114,7 @@ transforms:
     ![\arcsin](https://latex.codecogs.com/svg.latex?%5Carcsin "\arcsin")
     do not accept them,
 
-The option `bootstrap` does studentized bootstrapping \[@Efron1987-ov\]
+The option `bootstrap` does studentized bootstrapping Efron, B. (1987)
 with `n_reps` repetitions. If `bootstrap = FALSE`, an ordinary normal
 approximation will be used. The studentized bootstrap intervals are is a
 second-order correct, so its confidence intervals will be better than
@@ -140,3 +141,30 @@ pull requests to contribute. This project follows a [Contributor Code of
 Conduct](https://www.contributor-covenant.org/version/1/4/code-of-conduct.md).
 
 ## References
+
+-   Falk, C. F., & Savalei, V. (2011). The relationship between
+    unstandardized and standardized alpha, true reliability, and the
+    underlying measurement model. Journal of Personality Assessment,
+    93(5), 445-453. https://doi.org/10.1080/00223891.2011.594129
+-   Cronbach, L. J. (1951). Coefficient alpha and the internal structure
+    of tests. Psychometrika, 16(3), 297-334.
+    https://doi.org/10.1007/BF02310555#’
+-   Efron, B. (1987). Better Bootstrap Confidence Intervals. Journal of
+    the American Statistical Association, 82(397), 171-185.
+    https://doi.org/10.2307/2289144
+-   Maydeu-Olivares, A., Coffman, D. L., & Hartmann, W. M. (2007).
+    Asymptotically distribution-free (ADF) interval estimation of
+    coefficient alpha. Psychological Methods, 12(2), 157-176.
+    https://doi.org/10.1037/1082-989X.12.2.157
+-   van Zyl, J. M., Neudecker, H., & Nel, D. G. (2000). On the
+    distribution of the maximum likelihood estimator of Cronbach’s
+    alpha. Psychometrika, 65(3), 271-280.
+    https://doi.org/10.1007/BF02296146
+-   Yuan, K.-H., & Bentler, P. M. (2002). On robustness of the
+    normal-theory based asymptotic distributions of three reliability
+    coefficient estimates. Psychometrika, 67(2), 251-259.
+    https://doi.org/10.1007/BF02294845
+-   Joanes, D. N., & Gill, C. A. (1998). Comparing measures of sample
+    skewness and kurtosis. Journal of the Royal Statistical Society:
+    Series D (The Statistician), 47(1), 183-189.
+    https://doi.org/10.1111/1467-9884.00122
