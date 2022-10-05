@@ -10,15 +10,16 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.path = ""
 )
 ```
 
 ## Setting up the simulations
 
-We use the dataset `bfi` from the package `psychTools` together with `lavaan` 
-to estimate some realistic factor loadings $\lambda$ and standard deviations 
-$\sigma$. 
+We use the dataset `bfi` from the package `psychTools` together with `lavaan`
+to estimate some realistic factor loadings $\lambda$ and standard deviations
+$\sigma$.
 
 ```{r, cache=TRUE}
 #| cache: true
@@ -28,8 +29,8 @@ coefs <- lavaan::lavInspect(fit, what = "x")
 lambda <- abs(c(coefs$lambda * sqrt(as.numeric(coefs$psi))))
 sigma <- sqrt(diag(lavaan::lavInspect(fit, what = "x")$theta))
 ```
-We take the absolute value of the `lambda` vector as the agreement data 
-contains reverse-coded items. 
+We take the absolute value of the `lambda` vector as the agreement data
+contains reverse-coded items.
 
 ## Comparing confidence intervals coverages and lengths
 We compare five confidence intervals, all without transformations. The `adf`
@@ -37,7 +38,7 @@ interval is the asymptotic distribution-free interval, the `ell` interval
 is the interval based on elliptical distributions and a kurtosis correction,
 the `ell_par` is the elliptical interval assuming a parallel model. The same
 comments hold for `norm` (assuming normal data) and `norm_par` (assuming
-parallel normal data). 
+parallel normal data).
 
 ```{r, cache=TRUE}
 #| cache: true
@@ -52,9 +53,9 @@ latent <- \(n) extraDistr::rlaplace(n) / sqrt(2)
 true <- alphaci:::alpha(sigma, lambda)
 ```
 
-In this simulation we normal error terms and a Laplace-distributed latent 
+In this simulation we normal error terms and a Laplace-distributed latent
 variable. This one has excess kurtosis $3$, which caries over in large part
-to the data. `k` is the number of questions ands `n_reps` is the number of 
+to the data. `k` is the number of questions ands `n_reps` is the number of
 simulations.
 
 ```{r, cache=TRUE}
@@ -92,9 +93,9 @@ nn <- c(5, 10, 20, 30, 40, 50, 100, 200, 500, 1000, 2000)
 results <- sapply(nn, simulations)
 ```
 
-Plotting the coverages, we find, where `1` is asymptotically distribution-free, `2` is elliptical, `3` 
+Plotting the coverages, we find, where `1` is asymptotically distribution-free, `2` is elliptical, `3`
 is paralell and elliptical, `4` is `normal` and `5` is parallel and normal.
-```{r, cache=TRUE, fig.align = 'center'}
+```{r figure, cache=TRUE, fig.align = 'center'}
 matplot(nn, t(results[1:5, ]), xlab = "n", ylab = "Coverage", type = "b",
         log = "x")
 abline(h = 0.95, lty = 2)

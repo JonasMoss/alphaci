@@ -6,17 +6,18 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
 ## Introduction
 
 Combining the `type` and `parallel` options of `alphaci` yields a total of $6$ different asymptotic variance estimates. In this file we informally verify the computations of these estimates.
 
-| Distribution | Parallel | 
+| Distribution | Parallel |
 |--------------|----------|
 | Normal       | Yes      |
-| Normal       | No       | 
+| Normal       | No       |
 | Elliptical   | Yes      |
-| Elliptical   | No       | 
-| Arbitrary    | Yes      | 
+| Elliptical   | No       |
+| Arbitrary    | Yes      |
 | Arbitrary    | No       |
 
 In our setup we have $n = 1,000,000$, which should suffice. We use $k = 5$ across the board.
