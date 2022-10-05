@@ -7,7 +7,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 ## Setting up the simulations
 
@@ -15,8 +20,8 @@ We use the dataset `bfi` from the package `psychTools` together with `lavaan`
 to estimate some realistic factor loadings $\lambda$ and standard deviations 
 $\sigma$. 
 
-
-```r
+```{r, cache=TRUE}
+#| cache: true
 model <- c("y =~ A1 + A2 + A3 + A4 + A5")
 fit <- lavaan::cfa(model, data = psychTools::bfi)
 coefs <- lavaan::lavInspect(fit, what = "x")
@@ -34,8 +39,8 @@ the `ell_par` is the elliptical interval assuming a parallel model. The same
 comments hold for `norm` (assuming normal data) and `norm_par` (assuming
 parallel normal data). 
 
-
-```r
+```{r, cache=TRUE}
+#| cache: true
 library("alphaci")
 library("future.apply")
 plan(multisession)
@@ -52,8 +57,10 @@ variable. This one has excess kurtosis $3$, which caries over in large part
 to the data. `k` is the number of questions ands `n_reps` is the number of 
 simulations.
 
-
-```r
+```{r, cache=TRUE}
+#| cache: true
+#| code-fold: true
+#| code-summary: Define the `simulation` function.
 success <- \(ci) true <= ci[2] & true >= ci[1]
 len <- \(ci) ci[2] - ci[1]
 simulations <- \(n) {
@@ -72,33 +79,26 @@ simulations <- \(n) {
 ```
 
 Let's check out the results when $n= 10$.
-
-```r
+```{r, cache=TRUE}
+#| cache: true
 simulations(10)
-#>      cov.adf      cov.ell      cov.par     cov.norm cov.norm_par      len.adf      len.ell      len.par 
-#>    0.8440000    0.9420000    0.9434000    0.9096000    0.9141000    0.6975007    0.9490424    1.0112209 
-#>     len.norm len.norm_par 
-#>    0.8412564    0.8998135
 ```
 It appears  that the kurtosis corrections work well, at least for small sample
 size. Let's see how they perform when $n$ increases.
 
-
-```r
+```{r, cache=TRUE}
+#| cache: true
 nn <- c(5, 10, 20, 30, 40, 50, 100, 200, 500, 1000, 2000)
 results <- sapply(nn, simulations)
 ```
 
 Plotting the coverages, we find, where `1` is asymptotically distribution-free, `2` is elliptical, `3` 
 is paralell and elliptical, `4` is `normal` and `5` is parallel and normal.
-
-```r
+```{r, cache=TRUE, fig.align = 'center'}
 matplot(nn, t(results[1:5, ]), xlab = "n", ylab = "Coverage", type = "b",
         log = "x")
 abline(h = 0.95, lty = 2)
 ```
-
-<img src="figure/unnamed-chunk-7-1.png" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" />
 
 Hence the kurtosis correction intervals have better coverage than the `adf`
 interval when $n\leq 50$ and outperforms the normal theory intervals for
