@@ -116,7 +116,7 @@ psi_mat <- function(x, sigma, type = "adf") {
     mat <- gamma_mat(x)
   } else {
     multiplier <- sdxsd
-    mat <- gamma_mat_normal(sigma) * kurtosis_correction(x, type)
+    mat <- gamma_mat(x, sigma, type)
   }
   multiplier %*% mat %*% t(multiplier)
 }
