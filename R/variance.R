@@ -58,7 +58,7 @@ avar_parallel_adf <- function(alpha, sigma, gamma) {
   rho <- (sum(corr) - k) / (k * (k - 1))
   phi <- sqrt(mean(diag(sigma)))
   nu <- ((k - 1) * rho + 1) * c(diag(k)) - rep(1, k^2)
-  if(nrow(gamma) < k ^ 2) {
+  if (nrow(gamma) < k^2) {
     d_mat <- matrixcalc::D.matrix(k)
     gamma <- d_mat %*% gamma %*% t(d_mat)
   }
@@ -82,7 +82,7 @@ avar_std_adf <- function(x, sigma, type) {
 #' @return The sample estimate of the gamma matrix.
 #' @keywords internal
 gamma_mat <- function(x, sigma, type = "adf") {
-  if(type == "adf") {
+  if (type == "adf") {
     i_row <- \(n) unlist(lapply(seq_len(n), seq.int, n))
     i_col <- \(n) rep.int(seq_len(n), times = rev(seq_len(n)))
     y <- t(x) - colMeans(x, na.rm = TRUE)
