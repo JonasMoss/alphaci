@@ -1,5 +1,5 @@
 ---
-title: "Simulation of confidence intervals with `psychoTools::bfi`."
+title: "Simulation of confidence intervals with data from `psych::bfi`."
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Simulation of confidence intervals with `psychoTools::bfi`.}
@@ -17,14 +17,14 @@ knitr::opts_chunk$set(
 
 ## Setting up the simulations
 
-We use the dataset `bfi` from the package `psychTools` together with `lavaan`
+We use the dataset `bfi` from the package `psych` together with `lavaan`
 to estimate some realistic factor loadings $\lambda$ and standard deviations
 $\sigma$.
 
 ```{r, cache=TRUE}
 #| cache: true
 model <- c("y =~ A1 + A2 + A3 + A4 + A5")
-fit <- lavaan::cfa(model, data = psychTools::bfi)
+fit <- lavaan::cfa(model, data = psych::bfi)
 coefs <- lavaan::lavInspect(fit, what = "x")
 lambda <- abs(c(coefs$lambda * sqrt(as.numeric(coefs$psi))))
 sigma <- sqrt(diag(lavaan::lavInspect(fit, what = "x")$theta))
@@ -44,7 +44,7 @@ parallel normal data).
 #| cache: true
 library("alphaci")
 library("future.apply")
-plan(multisession)
+plan(multisession, workers = availableCores() - 2)
 set.seed(313)
 
 n_reps <- 10000
@@ -67,9 +67,10 @@ len <- \(ci) ci[2] - ci[1]
 simulations <- \(n) {
     results  <- future.apply::future_replicate(n_reps, {
       x <- alphaci:::simulate_congeneric(n, k, sigma, lambda, latent = latent)
-      cis <- rbind(adf = alphaci(x),
+      cis <- rbind(adf = alphaci(x, type = "adf"),
+        adf_par = alphaci(x, type = "adf", parallel = TRUE),
         ell = alphaci(x, type = "elliptical"),
-        par = alphaci(x, type = "elliptical", parallel = TRUE),
+        ell_par = alphaci(x, type = "elliptical", parallel = TRUE),
         norm = alphaci(x, type = "normal"),
         norm_par = alphaci(x, type = "normal", parallel = TRUE)
       )
@@ -89,13 +90,13 @@ size. Let's see how they perform when $n$ increases.
 
 ```{r, cache=TRUE}
 #| cache: true
-nn <- c(5, 10, 20, 30, 40, 50, 100, 200, 500, 1000, 2000)
+nn <- c(5, 10, 20, 30, 40, 50, 100, 200, 500, 1000, 2000, 5000)
 results <- sapply(nn, simulations)
 ```
 
 Plotting the coverages, we find, where `1` is asymptotically distribution-free, `2` is elliptical, `3`
 is paralell and elliptical, `4` is `normal` and `5` is parallel and normal.
-```{r figure, cache=TRUE, fig.align = 'center'}
+```{r figure, fig.align = 'center'}
 matplot(nn, t(results[1:5, ]), xlab = "n", ylab = "Coverage", type = "b",
         log = "x")
 abline(h = 0.95, lty = 2)
