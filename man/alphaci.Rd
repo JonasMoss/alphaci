@@ -92,12 +92,12 @@ alphaci_std(x)
 library("lavaan")
 x <- lavaan::HolzingerSwineford1939[1:20, 7:9]
 results <- c(
-   alphaci(x, type = "adf", parallel = FALSE),
-   alphaci(x, type = "adf", parallel = TRUE),
-   alphaci(x, type = "elliptical", parallel = FALSE),
-   alphaci(x, type = "elliptical", parallel = TRUE),
-   alphaci(x, type = "normal", parallel = FALSE),
-   alphaci(x, type = "normal", parallel = TRUE)
+  alphaci(x, type = "adf", parallel = FALSE),
+  alphaci(x, type = "adf", parallel = TRUE),
+  alphaci(x, type = "elliptical", parallel = FALSE),
+  alphaci(x, type = "elliptical", parallel = TRUE),
+  alphaci(x, type = "normal", parallel = FALSE),
+  alphaci(x, type = "normal", parallel = TRUE)
 )
 }
 \references{
