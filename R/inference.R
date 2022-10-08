@@ -90,7 +90,7 @@ alphaci <- function(x,
                     n_reps = 1000) {
   call <- match.call()
   args <- sapply(names(formals()), str2lang)
-  do.call(what = alphaci_, c(args, call = quote(call), standardized = TRUE))
+  do.call(what = alphaci_, c(args, call = quote(call), standardized = FALSE))
 }
 
 #' @export
@@ -105,7 +105,7 @@ alphaci_std <- function(x,
                         n_reps = 1000) {
   call <- match.call()
   args <- sapply(names(formals()), str2lang)
-  do.call(what = alphaci_, c(args, call = quote(call), standardized = FALSE))
+  do.call(what = alphaci_, c(args, call = quote(call), standardized = TRUE))
 }
 
 #' @keywords internal
