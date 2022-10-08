@@ -138,6 +138,7 @@ gs <- function(phi) {
 #' Calculate unbiased sample kurtosis.
 #' @param x Matrix of valus.
 #' @return Unbiased sample kurtosis.
+#' @keywords internal
 kurtosis <- function(x) {
   n <- nrow(x)
   g2 <- \(x) mean((x - mean(x))^4) / stats::var(x)^2
@@ -148,6 +149,7 @@ kurtosis <- function(x) {
 #' Calculate kurtosis correction
 #' @param x Matrix of values
 #' @param type The type of correction, either "normal" or "elliptical".
+#' @keywords internal
 kurtosis_correction <- function(x, type) {
   kurt <- if (type == "normal") 0 else kurtosis(x)
   1 + kurt / 3

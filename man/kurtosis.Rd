@@ -15,3 +15,4 @@ Unbiased sample kurtosis.
 \description{
 Calculate unbiased sample kurtosis.
 }
+\keyword{internal}

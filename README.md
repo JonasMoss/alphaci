@@ -15,9 +15,6 @@ An `R` package for doing inference with coefficient alpha (Cronbach,
 1951) and standardized alpha (Falk & Savalei, 2011). Many methods are
 supported, with special emphasis on small samples and non-normality.
 
-***Note:*** This package is under active development! Along with a
-companion paper.
-
 ## Installation
 
 The package is not available on `CRAN` yet, so use the following command
@@ -56,11 +53,11 @@ alphaci(x)
 #> 
 #> 95% confidence interval (n = 2709).
 #>     0.025     0.975 
-#> 0.6938373 0.7331658 
+#> 0.6828923 0.7246195 
 #> 
 #> Sample estimates.
 #>     alpha        sd 
-#> 0.7135016 0.5218675
+#> 0.7037559 0.5536964
 ```
 
 You can also calculate confidence intervals for standardized alpha

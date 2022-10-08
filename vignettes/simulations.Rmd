@@ -1,8 +1,8 @@
 ---
-title: "Simulation of confidence intervals with data from `psych::bfi`."
+title: "Simulation of confidence intervals."
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Simulation of confidence intervals with `psychoTools::bfi`.}
+  %\VignetteIndexEntry{Simulation of confidence intervals.}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

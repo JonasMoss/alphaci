@@ -20,8 +20,6 @@ knitr::opts_chunk$set(
 
 An `R` package for doing inference with coefficient alpha (Cronbach, 1951) and standardized alpha (Falk & Savalei, 2011). Many methods are supported, with special emphasis on small samples and non-normality. 
 
-***Note:*** This package is under active development! Along with a companion paper.
-
 ```{r setup, include=FALSE}
 #library("alphaci")
 knitr::opts_chunk$set(echo = TRUE)

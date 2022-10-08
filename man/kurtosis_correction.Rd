@@ -14,3 +14,4 @@ kurtosis_correction(x, type)
 \description{
 Calculate kurtosis correction
 }
+\keyword{internal}
