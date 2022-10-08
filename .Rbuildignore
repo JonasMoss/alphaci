@@ -24,3 +24,6 @@
 ^README_files$
 ^references.bib$
 ^vignettes_$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
