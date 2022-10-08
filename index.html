@@ -64,7 +64,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="articles/simulations.html">Simulation of confidence intervals with data from `psych::bfi`.</a>
+    <a class="dropdown-item" href="articles/simulations.html">Simulation of confidence intervals.</a>
     <a class="dropdown-item" href="articles/verification.html">Verifying the variances.</a>
   </div>
 </li>
@@ -87,7 +87,6 @@
 </div>
 
 <p>An <code>R</code> package for doing inference with coefficient alpha (Cronbach, 1951) and standardized alpha (Falk &amp; Savalei, 2011). Many methods are supported, with special emphasis on small samples and non-normality.</p>
-<p><strong><em>Note:</em></strong> This package is under active development! Along with a companion paper.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -120,11 +119,11 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; 95% confidence interval (n = 2709).</span></span>
 <span><span class="co">#&gt;     0.025     0.975 </span></span>
-<span><span class="co">#&gt; 0.6938373 0.7331658 </span></span>
+<span><span class="co">#&gt; 0.6828923 0.7246195 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sample estimates.</span></span>
 <span><span class="co">#&gt;     alpha        sd </span></span>
-<span><span class="co">#&gt; 0.7135016 0.5218675</span></span></code></pre></div>
+<span><span class="co">#&gt; 0.7037559 0.5536964</span></span></code></pre></div>
 <p>You can also calculate confidence intervals for standardized alpha</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/alphaci.html">alphaci_std</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
