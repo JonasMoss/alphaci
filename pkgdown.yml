@@ -1,10 +1,10 @@
-pandoc: 2.14.2
-pkgdown: 2.0.6
+pandoc: 2.19.2
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   simulations: simulations.html
   verification: verification.html
-last_built: 2022-10-08T11:43Z
+last_built: 2024-02-05T09:12Z
 urls:
   reference: https://jonasmoss.github.io/alphaci/reference
   article: https://jonasmoss.github.io/alphaci/articles
