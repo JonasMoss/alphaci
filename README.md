@@ -3,7 +3,7 @@
 
 # alphaci <img src="man/figures/logo.png" align="right" width="160" height="135"/>
 
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/alphaci.png)](https://cran.r-project.org/package=alphaci)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/alphaci)](https://cran.r-project.org/package=alphaci)
 [![R-CMD-check](https://github.com/JonasMoss/alphaci/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JonasMoss/alphaci/actions/workflows/R-CMD-check.yaml)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -17,8 +17,13 @@ supported, with special emphasis on small samples and non-normality.
 
 ## Installation
 
-The package is not available on `CRAN` yet, so use the following command
-from inside `R`:
+Install from CRAN:
+
+``` r
+install.packages("alphaci")
+```
+
+Or use the development version.
 
 ``` r
 # install.packages("remotes")

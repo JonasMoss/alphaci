@@ -28,9 +28,15 @@ knitr::opts_chunk$set(out.width='750px', dpi=200)
 
 ## Installation
 
-The package is not available on `CRAN` yet, so use the following command from inside `R`:
+Install from CRAN:
 
-```{r install, echo = TRUE, eval = FALSE}
+```{r install1, echo = TRUE, eval = FALSE}
+install.packages("alphaci")
+```
+
+Or use the development version.
+
+```{r install2, echo = TRUE, eval = FALSE}
 # install.packages("remotes")
 remotes::install_github("JonasMoss/alphaci")
 ```
