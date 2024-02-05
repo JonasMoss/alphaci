@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   simulations: simulations.html
   verification: verification.html
-last_built: 2024-02-05T09:12Z
+last_built: 2024-02-05T12:24Z
 urls:
   reference: https://jonasmoss.github.io/alphaci/reference
   article: https://jonasmoss.github.io/alphaci/articles
