@@ -85,13 +85,13 @@ Finally, the option `parallel = TRUE` can be used, which is suitable if covarian
 ## Similar software
 There are several `R` packages that make confidence intervals for coefficient alpha, but not much support for standardized alpha. Most packages use some sort of normality assumption.
 
-The `alpha` and `alpha.ci` functions of [`psych`](https://personality-project.org/r/psych/) calculates confidence intervals for coefficient alpha following normal theory. [`semTools`](https://cran.r-project.org/web/packages/semTools/index.html) calculates numerous reliability coefficients with its `reliability` function.
-The [`Cronbach`](https://cran.r-project.org/web/packages/Cronbach/index.html) package provides confidence intervals based on normal theory, as does the `alpha.CI` function of [`psychometric`](https://cran.r-project.org/web/packages/psychometric/index.html).
-Confidence intervals for both alphas can, in principle, be calculated using structural equation modeling together with the delta method. Packages such as [`lavaan`](https://cran.r-project.org/web/packages/lavaan/index.html) can be used for this purpose, but this is seldom done.
+The `alpha` and `alpha.ci` functions of [`psych`](https://CRAN.R-project.org/package=psych) calculates confidence intervals for coefficient alpha following normal theory. [`semTools`](https://CRAN.R-project.org/package=semTools) calculates numerous reliability coefficients with its `reliability` function.
+The [`Cronbach`](https://CRAN.R-project.org/package=Cronbach) package provides confidence intervals based on normal theory, as does the `alpha.CI` function of [`psychometric`](https://CRAN.R-project.org/package=psychometric).
+Confidence intervals for both alphas can, in principle, be calculated using structural equation modeling together with the delta method. Packages such as [`lavaan`](https://CRAN.R-project.org/package=lavaan) can be used for this purpose, but this is seldom done.
 
 ## How to Contribute or Get Help
 
-If you encounter a bug, have a feature request or need some help, open a [Github issue](https://github.com/JonasMoss/alphaci/issues). Create a pull requests to contribute. This project follows a [Contributor Code of Conduct](https://www.contributor-covenant.org/version/1/4/code-of-conduct.md).
+If you encounter a bug, have a feature request or need some help, open a [Github issue](https://github.com/JonasMoss/alphaci/issues). Create a pull requests to contribute.
 
 ## References
 
