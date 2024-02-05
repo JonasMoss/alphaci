@@ -7,10 +7,7 @@
 gs(phi)
 }
 \arguments{
-\item{x}{Correlation matrix.}
-
-\item{parallel}{If \code{TRUE}, returns the value of \code{gs} under the parallel
-model.}
+\item{phi}{Correlation matrix.}
 }
 \value{
 The gs vector.

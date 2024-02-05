@@ -123,9 +123,7 @@ psi_mat <- function(x, sigma, type = "adf") {
 
 #' The gs vector used in the asymptotic variance of standardized alpha.
 #'
-#' @param x Correlation matrix.
-#' @param parallel If `TRUE`, returns the value of `gs` under the parallel
-#'   model.
+#' @param phi Correlation matrix.
 #' @return The gs vector.
 #' @keywords internal
 gs <- function(phi) {
